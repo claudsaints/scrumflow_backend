@@ -7,6 +7,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,13 +34,14 @@ public class UserAuthFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
 
 
-        if (requestURI.startsWith("/h2-console")) {
+        if (requestURI.startsWith("/h2-console") || requestURI.startsWith("/favicon.ico")) {
+            System.out.println("começa");
             filterChain.doFilter(request, response);
             return;
         }
 
 
-        if (checkIfEndpointIsNotPublic(request)) {
+        if (!checkIfEndpointIsNotPublic(request)) {
             String token = recoveryToken(request);
             if (token != null) {
                 String subject = jwtTokenService.getSubjectFromToken(token);
@@ -56,6 +58,7 @@ public class UserAuthFilter extends OncePerRequestFilter {
                     throw new RuntimeException("Usuário não encontrado.");
                 }
             } else {
+                //verficar
                 throw new RuntimeException("O token está ausente.");
             }
         }
@@ -72,7 +75,8 @@ public class UserAuthFilter extends OncePerRequestFilter {
 
     private boolean checkIfEndpointIsNotPublic(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        boolean x = !Arrays.asList(SecurityConfiguration.ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).contains(requestURI);
+        System.out.println(requestURI);
+        boolean x = Arrays.asList(SecurityConfiguration.PUBLIC_ENDPOINTS).contains(requestURI);
         System.out.println("BOOLEANO: " + x);
         return x;
     }

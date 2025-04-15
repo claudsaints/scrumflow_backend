@@ -2,15 +2,18 @@ package com.claudsaints.scrumflow.controllers;
 import com.claudsaints.scrumflow.dto.CreateUserDTO;
 import com.claudsaints.scrumflow.dto.LoginUserDTO;
 import com.claudsaints.scrumflow.dto.RecoveryJwtDTO;
+import com.claudsaints.scrumflow.entities.User;
 import com.claudsaints.scrumflow.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/users")
-public class UserController {
+class UserController {
     @Autowired
     private UserService service;
 
@@ -25,6 +28,17 @@ public class UserController {
         service.create(createUserDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+    @PutMapping(value = "/update/{id}")
+    public ResponseEntity<User> updateUser(@RequestBody CreateUserDTO obj, @PathVariable Long id) {
+        User usr = service.update(id, obj);
+        return ResponseEntity.ok().body(usr);
+    }
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+        service.delete(id);
+        return  ResponseEntity.noContent().build();
+
+    }
 
     @GetMapping("/test")
     public ResponseEntity<String> getAuthenticationTest() {
@@ -37,7 +51,9 @@ public class UserController {
     }
 
     @GetMapping("/test/administrator")
-    public ResponseEntity<String> getAdminAuthenticationTest() {
-        return ResponseEntity.ok().body("Administrador autenticado com sucesso");
+    public ResponseEntity<List<User>> getAdminAuthenticationTest() {
+        List<User> users = service.findAll();
+
+        return ResponseEntity.ok().body(users);
     }
 }

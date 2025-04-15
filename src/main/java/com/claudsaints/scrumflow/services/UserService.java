@@ -12,11 +12,12 @@ import com.claudsaints.scrumflow.security.config.SecurityConfiguration;
 import com.claudsaints.scrumflow.security.details.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -46,19 +47,55 @@ public class UserService {
 
         newUser.setRoles(List.of(role));
 
-
         User savedUser = repository.save(newUser);
 
         new CreateUserDTO(savedUser.getName(), savedUser.getEmail(), null, createUserDto.role());
     }
 
     public RecoveryJwtDTO read(LoginUserDTO loginUserDto){
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginUserDto.email(), loginUserDto.password());
-        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        Optional<User> optionalUser = repository.findByEmail(loginUserDto.email());
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        if (optionalUser.isEmpty()) {
+            throw new UsernameNotFoundException("Usuário não encontrado com o e-mail: " + loginUserDto.email());
+        }
 
-        return new RecoveryJwtDTO(jwtTokenService.generateToken(userDetails));
+        User user = optionalUser.get();
+
+        if (!securityConfiguration.passwordEncoder().matches(loginUserDto.password(), user.getPassword())) {
+            throw new BadCredentialsException("Senha inválida.");
+        }
+
+        UserDetailsImpl userDetails = new UserDetailsImpl(user);
+        String token = jwtTokenService.generateToken(userDetails);
+
+        return new RecoveryJwtDTO(token);
     }
+    public User update(Long id, CreateUserDTO user){
+       try{
+           System.out.println("User" + user + id);
+            User entity = repository.getReferenceById(id);
+
+            updateData(entity,user);
+
+            return repository.save(entity);
+        }catch (RuntimeException e){
+            throw new RuntimeException("Resource Not found");
+
+        }
+    }
+    public void updateData(User entity, CreateUserDTO obj){
+        entity.setName(obj.name());
+        entity.setEmail(obj.email());
+        entity.setPassword(securityConfiguration.passwordEncoder().encode(obj.password()));
+    }
+
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
+
+    public List<User> findAll(){
+        return repository.findAll();
+    }
+
 
 }
