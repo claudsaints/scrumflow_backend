@@ -32,7 +32,8 @@ public class SecurityConfiguration {
     public static final String[] AUTHENTICATED_ENDPOINTS = {
             "/users/test",
             "/users/{id}",
-            "/users/update"
+            "/users/update",
+            "/projects"
     };
 
     public static final String[] ADMIN_ENDPOINTS = {

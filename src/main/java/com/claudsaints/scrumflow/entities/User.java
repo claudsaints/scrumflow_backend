@@ -1,8 +1,10 @@
 package com.claudsaints.scrumflow.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,6 +18,10 @@ public class User implements Serializable {
     @Column(unique = true)
     private String email;
     private String password;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "owner_id")
+    private List<Project> projects = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name="users_roles",
@@ -69,6 +75,10 @@ public class User implements Serializable {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
     }
 
     public List<Role> getRoles() {

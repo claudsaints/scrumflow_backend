@@ -35,7 +35,6 @@ public class UserAuthFilter extends OncePerRequestFilter {
 
 
         if (requestURI.startsWith("/h2-console") || requestURI.startsWith("/favicon.ico")) {
-            System.out.println("começa");
             filterChain.doFilter(request, response);
             return;
         }
@@ -58,7 +57,6 @@ public class UserAuthFilter extends OncePerRequestFilter {
                     throw new RuntimeException("Usuário não encontrado.");
                 }
             } else {
-                //verficar
                 throw new RuntimeException("O token está ausente.");
             }
         }
