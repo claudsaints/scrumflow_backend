@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "tb_projects")
+@Table(name = "tb_project")
 public class Project implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +21,9 @@ public class Project implements Serializable {
     @JoinColumn(name = "user_id")
     private User owner_id;
     private Instant create_At;
+
+    @OneToMany(mappedBy = "id.project")
+    private Set<ProjectMembers> members = new HashSet<>();
 
     Project(){
 
@@ -70,6 +75,10 @@ public class Project implements Serializable {
 
     public void setCreate_At(Instant create_At) {
         this.create_At = create_At;
+    }
+
+    public Set<ProjectMembers> getMembers(){
+        return members;
     }
 
     @Override
