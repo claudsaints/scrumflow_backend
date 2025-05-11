@@ -2,35 +2,24 @@ package com.claudsaints.scrumflow.entities;
 
 import com.claudsaints.scrumflow.entities.enums.RoleName;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name="roles")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Getter @Setter
     private RoleName name;
 
-    public Role(){
 
-    }
-
-    public Role(Long id, RoleName name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public RoleName getName() {
-        return name;
-    }
-
-    public void setName(RoleName name) {
-        this.name = name;
-    }
 }
