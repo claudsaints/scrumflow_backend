@@ -32,6 +32,17 @@ public class Project implements Serializable {
     @OneToMany(mappedBy = "id.project")
     private Set<ProjectMembers> members = new HashSet<>();
 
+    @OneToMany(mappedBy = "project")
+    private Set<ProjectList> lists = new HashSet<>();
+
+    @OneToMany(mappedBy = "project")
+    private Set<Label> labels = new HashSet<>();
+
+    @OneToMany(mappedBy = "project")
+    private Set<Sprint> sprints = new HashSet<>();
+
+
+
     public Project(Long id, String title, String description, User user_id, Instant create_At) {
         this.id = id;
         this.title = title;

@@ -1,16 +1,13 @@
 package com.claudsaints.scrumflow.config;
 
-import com.claudsaints.scrumflow.entities.Project;
-import com.claudsaints.scrumflow.entities.ProjectMembers;
-import com.claudsaints.scrumflow.entities.User;
-import com.claudsaints.scrumflow.repositories.ProjectMembersRepository;
-import com.claudsaints.scrumflow.repositories.ProjectRepository;
-import com.claudsaints.scrumflow.repositories.UserRepository;
+import com.claudsaints.scrumflow.entities.*;
+import com.claudsaints.scrumflow.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Arrays;
 
@@ -25,6 +22,22 @@ public class Config implements CommandLineRunner {
 
     @Autowired
     private ProjectMembersRepository projectMembersRepository;
+
+    @Autowired
+    private ListRepository projectListRepository;
+
+    @Autowired
+    private CardRepository cardRepository;
+
+
+    @Autowired
+    private LabelRepository labelRepository;
+
+    @Autowired
+    private ListRepository listRepository;
+
+    @Autowired
+    private  SprintRepository sprintRepository;
 
 
     @Override
@@ -45,7 +58,26 @@ public class Config implements CommandLineRunner {
 
         projectMembersRepository.saveAll(Arrays.asList(pm1,pm2));
 
+        ProjectList l1  = new ProjectList(null,p1,"To Do", 0 , Instant.now() );
+        ProjectList l2  = new ProjectList(null,p1,"Done", 1 , Instant.now() );
 
+        projectListRepository.saveAll(Arrays.asList(l1,l2));
+
+        Card c1 = new Card(null,l1,"criar entidades","criar novas entidades com framework spring",Instant.now(),null,"user story",5);
+        Card c2 = new Card(null,l1,"criar repositories","criar novos repositories para salvar dados",Instant.now(),null,"user story",2);
+
+        cardRepository.saveAll(Arrays.asList(c1,c2));
+
+
+        Label lb1 = new Label(null,p1,"edit","#fffff");
+        Label lb2 = new Label(null, p2,"importante", "#ff0000");
+
+        labelRepository.saveAll(Arrays.asList(lb1,lb2));
+
+
+
+
+        Sprint sp1 = new Sprint(null,p1,"one",null,null,"create backend");
 
     }
 }

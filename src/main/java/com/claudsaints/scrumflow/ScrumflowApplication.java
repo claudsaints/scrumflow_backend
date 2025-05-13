@@ -9,5 +9,4 @@ public class ScrumflowApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ScrumflowApplication.class, args);
 	}
-
 }
