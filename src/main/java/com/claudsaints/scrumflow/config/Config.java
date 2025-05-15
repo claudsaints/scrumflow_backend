@@ -1,7 +1,9 @@
 package com.claudsaints.scrumflow.config;
 
 import com.claudsaints.scrumflow.entities.*;
+import com.claudsaints.scrumflow.entities.enums.RoleName;
 import com.claudsaints.scrumflow.repositories.*;
+import com.claudsaints.scrumflow.security.config.SecurityConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +16,9 @@ import java.util.Arrays;
 @Configuration
 @Profile("test")
 public class Config implements CommandLineRunner {
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -39,24 +44,35 @@ public class Config implements CommandLineRunner {
     @Autowired
     private  SprintRepository sprintRepository;
 
+    @Autowired
+    private SecurityConfiguration securityConfiguration;
+
 
     @Override
     public void run(String... args) throws Exception {
-        User u1 = new User(null,"claudio","claudio@gmail.com","123456");
+
+        Role adm = new Role( null,RoleName.ROLE_ADMINISTRATOR);
+        Role simple = new Role( null,RoleName.ROLE_CUSTOMER);
+
+
+
+        User u1 = new User(null,"claudio","claudio@gmail.com", securityConfiguration.passwordEncoder().encode("123456"));
+        u1.setRoles(Arrays.asList(adm,simple));
+
         User u2 = new User(null,"maria","maria@gmail.com","123456");
         User u3 = new User(null,"pedro","pedro@gmail.com","123456");
 
         userRepository.saveAll(Arrays.asList(u1,u2,u3));
 
         Project p1 = new Project(null,"scrumflow","a scrum + kanban app", u1, Instant.now());
-        Project p2 = new Project(null,"virtual_shop","virtual website to buy things", u3, Instant.now());
+        Project p2 = new Project(null,"virtual_shop","virtual website to buy things", u1, Instant.now());
 
         projectRepository.saveAll(Arrays.asList(p2,p1));
-
+        ProjectMembers pm0 = new ProjectMembers(u1,p1,"dev",Instant.now());
         ProjectMembers pm1 = new ProjectMembers(u2,p1,"product_owner",Instant.now());
-        ProjectMembers pm2 = new ProjectMembers(u3,p1,"product_owner",Instant.now());
+        ProjectMembers pm2 = new ProjectMembers(u3,p1,"scrum_master",Instant.now());
 
-        projectMembersRepository.saveAll(Arrays.asList(pm1,pm2));
+        projectMembersRepository.saveAll(Arrays.asList(pm0,pm1,pm2));
 
         ProjectList l1  = new ProjectList(null,p1,"To Do", 0 , Instant.now() );
         ProjectList l2  = new ProjectList(null,p1,"Done", 1 , Instant.now() );

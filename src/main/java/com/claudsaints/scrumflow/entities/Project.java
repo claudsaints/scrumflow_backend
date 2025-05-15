@@ -1,12 +1,12 @@
 package com.claudsaints.scrumflow.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -26,7 +26,8 @@ public class Project implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User owner_id;
+    private User owner;
+
     private Instant create_At;
 
     @OneToMany(mappedBy = "id.project")
@@ -43,11 +44,11 @@ public class Project implements Serializable {
 
 
 
-    public Project(Long id, String title, String description, User user_id, Instant create_At) {
+    public Project(Long id, String title, String description, User user, Instant create_At) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.owner_id = user_id;
+        this.owner = user;
         this.create_At = create_At;
     }
 }

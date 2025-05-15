@@ -20,7 +20,7 @@ public class User implements Serializable {
     @Getter @Setter private String password;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "owner_id")
+    @OneToMany(mappedBy = "owner")
     private List<Project> projects = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
