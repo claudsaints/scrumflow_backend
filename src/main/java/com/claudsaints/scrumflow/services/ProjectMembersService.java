@@ -5,6 +5,8 @@ import com.claudsaints.scrumflow.repositories.ProjectMembersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProjectMembersService {
 
@@ -15,9 +17,6 @@ public class ProjectMembersService {
         return repository.save(member);
     }
 
-//    public List<ProjectMembers> findAll(){
-//        return  repository.findAll();
-//    }
 //
 //    public ProjectMembers updateRole(){
 //

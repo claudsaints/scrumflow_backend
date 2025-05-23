@@ -5,9 +5,7 @@ import com.claudsaints.scrumflow.dto.ProjectDataDTO;
 import com.claudsaints.scrumflow.entities.Project;
 import com.claudsaints.scrumflow.repositories.ProjectRepository;
 import com.claudsaints.scrumflow.security.auth.JwtService;
-import com.claudsaints.scrumflow.security.auth.UserAuthFilter;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +18,6 @@ public class ProjectService {
     @Autowired
     private ProjectRepository repository;
 
-    @Autowired
-    private JwtService jwtService;
-
-//    private UserAuthFilter filter = new UserAuthFilter();
-
     public Project create(Project obj){
         obj.setCreate_At(Instant.now());
         return  repository.save(obj);
@@ -35,16 +28,17 @@ public class ProjectService {
     }
 
     public List<ProjectDTO> findByOwnerEmail(String email){
-//        HttpServletRequest request;
-//        String email = jwtService.getSubjectFromToken(filter.recoveryToken( request));
         return  repository.findByOwnerEmail(email);
-
     }
 
-    public Project findById(Long id){
+    public List<ProjectDTO> findByMemberEmail(String email){
+        return  repository.findByMembersIdUserEmail(email);
+    }
 
-        return repository.findById(id)
+    public ProjectDataDTO findById(Long id){
+        Project project =  repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Projeto não encontrado"));
+        return new ProjectDataDTO(project);
     }
 
 //    public Project update(Project obj){

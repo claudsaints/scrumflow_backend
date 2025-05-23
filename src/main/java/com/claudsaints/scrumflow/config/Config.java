@@ -71,8 +71,9 @@ public class Config implements CommandLineRunner {
         ProjectMembers pm0 = new ProjectMembers(u1,p1,"dev",Instant.now());
         ProjectMembers pm1 = new ProjectMembers(u2,p1,"product_owner",Instant.now());
         ProjectMembers pm2 = new ProjectMembers(u3,p1,"scrum_master",Instant.now());
+        ProjectMembers pm3 = new ProjectMembers(u1,p2,"scrum_master",Instant.now());
 
-        projectMembersRepository.saveAll(Arrays.asList(pm0,pm1,pm2));
+        projectMembersRepository.saveAll(Arrays.asList(pm0,pm1,pm2,pm3));
 
         ProjectList l1  = new ProjectList(null,p1,"To Do", 0 , Instant.now() );
         ProjectList l2  = new ProjectList(null,p1,"Done", 1 , Instant.now() );
