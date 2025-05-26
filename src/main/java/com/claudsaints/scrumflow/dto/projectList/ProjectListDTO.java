@@ -1,5 +1,6 @@
-package com.claudsaints.scrumflow.dto;
+package com.claudsaints.scrumflow.dto.projectList;
 
+import com.claudsaints.scrumflow.dto.card.CardDTO;
 import com.claudsaints.scrumflow.entities.ProjectList;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class ProjectListDTO {
     private Instant create_at;
     private Set<CardDTO> cardList = new HashSet<CardDTO>();
 
-    ProjectListDTO(ProjectList obj){
+    public ProjectListDTO(ProjectList obj){
         this.id = obj.getId();
         this.title = obj.getTitle();
         this.position = obj.getPosition();

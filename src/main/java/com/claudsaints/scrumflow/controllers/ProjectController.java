@@ -1,8 +1,8 @@
 package com.claudsaints.scrumflow.controllers;
 
 
-import com.claudsaints.scrumflow.dto.ProjectDTO;
-import com.claudsaints.scrumflow.dto.ProjectDataDTO;
+import com.claudsaints.scrumflow.dto.project.ProjectDTO;
+import com.claudsaints.scrumflow.dto.project.ProjectDataDTO;
 import com.claudsaints.scrumflow.entities.Project;
 import com.claudsaints.scrumflow.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;

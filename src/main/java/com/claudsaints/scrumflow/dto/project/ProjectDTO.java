@@ -1,5 +1,6 @@
-package com.claudsaints.scrumflow.dto;
+package com.claudsaints.scrumflow.dto.project;
 
+import com.claudsaints.scrumflow.dto.user.UserDTO;
 import com.claudsaints.scrumflow.entities.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

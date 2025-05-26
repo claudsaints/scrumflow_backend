@@ -1,4 +1,4 @@
-package com.claudsaints.scrumflow.dto;
+package com.claudsaints.scrumflow.dto.user;
 
 import com.claudsaints.scrumflow.entities.enums.RoleName;
 

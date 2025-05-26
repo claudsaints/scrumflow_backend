@@ -1,4 +1,4 @@
-package com.claudsaints.scrumflow.dto;
+package com.claudsaints.scrumflow.dto.user;
 
 public record LoginUserDTO(
         String email,

@@ -4,8 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.claudsaints.scrumflow.dto.UserDTO;
-import com.claudsaints.scrumflow.entities.User;
 import com.claudsaints.scrumflow.security.details.UserDetailsImpl;
 import org.springframework.stereotype.Service;
 import java.time.Instant;

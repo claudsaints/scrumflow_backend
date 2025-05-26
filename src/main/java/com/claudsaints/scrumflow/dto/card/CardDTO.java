@@ -1,4 +1,4 @@
-package com.claudsaints.scrumflow.dto;
+package com.claudsaints.scrumflow.dto.card;
 
 import com.claudsaints.scrumflow.entities.Card;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.Setter;
 public class CardDTO {
     private String title;
     private String description;
-    CardDTO(Card obj){
+    public CardDTO(Card obj){
         this.title = obj.getTitle();
         this.description = obj.getDescription();;
     }

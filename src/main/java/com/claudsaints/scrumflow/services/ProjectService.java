@@ -1,10 +1,9 @@
 package com.claudsaints.scrumflow.services;
 
-import com.claudsaints.scrumflow.dto.ProjectDTO;
-import com.claudsaints.scrumflow.dto.ProjectDataDTO;
+import com.claudsaints.scrumflow.dto.project.ProjectDTO;
+import com.claudsaints.scrumflow.dto.project.ProjectDataDTO;
 import com.claudsaints.scrumflow.entities.Project;
 import com.claudsaints.scrumflow.repositories.ProjectRepository;
-import com.claudsaints.scrumflow.security.auth.JwtService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +38,11 @@ public class ProjectService {
         Project project =  repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Projeto não encontrado"));
         return new ProjectDataDTO(project);
+    }
+
+    public Project findEntityById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Projeto não encontrado"));
     }
 
 //    public Project update(Project obj){

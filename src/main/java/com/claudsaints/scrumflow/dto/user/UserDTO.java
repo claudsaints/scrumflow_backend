@@ -1,4 +1,4 @@
-package com.claudsaints.scrumflow.dto;
+package com.claudsaints.scrumflow.dto.user;
 
 import com.claudsaints.scrumflow.entities.User;
 import lombok.Getter;
@@ -12,7 +12,7 @@ public class UserDTO {
     private String name;
     private String email;
 
-    UserDTO(User obj){
+    public UserDTO(User obj){
         name = obj.getName();
         email = obj.getEmail();
     }

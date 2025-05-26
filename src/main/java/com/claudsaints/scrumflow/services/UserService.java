@@ -1,7 +1,7 @@
 package com.claudsaints.scrumflow.services;
 
-import com.claudsaints.scrumflow.dto.CreateUserDTO;
-import com.claudsaints.scrumflow.dto.LoginUserDTO;
+import com.claudsaints.scrumflow.dto.user.CreateUserDTO;
+import com.claudsaints.scrumflow.dto.user.LoginUserDTO;
 import com.claudsaints.scrumflow.dto.RecoveryJwtDTO;
 import com.claudsaints.scrumflow.entities.Role;
 import com.claudsaints.scrumflow.entities.User;
