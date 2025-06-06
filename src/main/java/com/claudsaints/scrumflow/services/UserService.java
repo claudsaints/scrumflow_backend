@@ -1,5 +1,4 @@
 package com.claudsaints.scrumflow.services;
-
 import com.claudsaints.scrumflow.dto.user.CreateUserDTO;
 import com.claudsaints.scrumflow.dto.user.LoginUserDTO;
 import com.claudsaints.scrumflow.dto.RecoveryJwtDTO;
@@ -10,6 +9,7 @@ import com.claudsaints.scrumflow.repositories.UserRepository;
 import com.claudsaints.scrumflow.security.auth.JwtService;
 import com.claudsaints.scrumflow.security.config.SecurityConfiguration;
 import com.claudsaints.scrumflow.security.details.UserDetailsImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,20 +20,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    @Autowired
     private RoleRepository roleRepository;
-
-    @Autowired
     private UserRepository repository;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
     private JwtService jwtTokenService;
-
-    @Autowired
     private SecurityConfiguration securityConfiguration;
 
     public void create(CreateUserDTO createUserDto){

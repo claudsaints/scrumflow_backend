@@ -13,6 +13,5 @@ public class CardDTO {
     private String description;
     public CardDTO(Card obj){
         this.title = obj.getTitle();
-        this.description = obj.getDescription();;
     }
 }

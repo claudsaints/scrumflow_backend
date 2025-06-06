@@ -1,5 +1,6 @@
 package com.claudsaints.scrumflow.entities;
 
+import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.pk.ProjectMembersPk;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
@@ -19,11 +20,11 @@ public class ProjectMembers implements Serializable {
     @EmbeddedId
     private ProjectMembersPk id = new ProjectMembersPk();
     @Getter @Setter
-    private String role;
+    private ProjectMemberRole role;
     @Getter @Setter
     private Instant join_at;
 
-    public ProjectMembers(User user , Project project, String role, Instant join_at) {
+    public ProjectMembers(User user , Project project, ProjectMemberRole role, Instant join_at) {
         this.id.setProject(project);
         this.id.setUser(user);
         this.role = role;

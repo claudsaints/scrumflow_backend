@@ -1,6 +1,7 @@
 package com.claudsaints.scrumflow.config;
 
 import com.claudsaints.scrumflow.entities.*;
+import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.entities.enums.RoleName;
 import com.claudsaints.scrumflow.repositories.*;
 import com.claudsaints.scrumflow.security.config.SecurityConfiguration;
@@ -68,10 +69,10 @@ public class Config implements CommandLineRunner {
         Project p2 = new Project(null,"virtual_shop","virtual website to buy things", u1, Instant.now());
 
         projectRepository.saveAll(Arrays.asList(p2,p1));
-        ProjectMembers pm0 = new ProjectMembers(u1,p1,"dev",Instant.now());
-        ProjectMembers pm1 = new ProjectMembers(u2,p1,"product_owner",Instant.now());
-        ProjectMembers pm2 = new ProjectMembers(u3,p1,"scrum_master",Instant.now());
-        ProjectMembers pm3 = new ProjectMembers(u1,p2,"scrum_master",Instant.now());
+        ProjectMembers pm0 = new ProjectMembers(u1,p1, ProjectMemberRole.MEMBER,Instant.now());
+        ProjectMembers pm1 = new ProjectMembers(u2,p1,ProjectMemberRole.OWNER,Instant.now());
+        ProjectMembers pm2 = new ProjectMembers(u3,p1,ProjectMemberRole.ADMIN,Instant.now());
+        ProjectMembers pm3 = new ProjectMembers(u1,p2,ProjectMemberRole.ADMIN,Instant.now());
 
         projectMembersRepository.saveAll(Arrays.asList(pm0,pm1,pm2,pm3));
 

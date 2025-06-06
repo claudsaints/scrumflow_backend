@@ -11,6 +11,4 @@ import lombok.NoArgsConstructor;
 public class CreateProjectListDTO {
     private String title;
     private  Integer position;
-
-
 }

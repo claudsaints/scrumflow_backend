@@ -30,7 +30,7 @@ public class Card  implements Serializable {
     private ProjectList list;
     private String title;
     private String description;
-    private Instant create_at;
+    private Instant start_at;
     private Instant end_at;
     private String type;
     private Integer story_point;
@@ -42,12 +42,12 @@ public class Card  implements Serializable {
     )
     private Set<Label> labels = new HashSet<>();
 
-    public Card(Long id, ProjectList projectList, String title, String description, Instant create_at, Instant end_at, String type, Integer story_point) {
+    public Card(Long id, ProjectList projectList, String title, String description, Instant start_at, Instant end_at, String type, Integer story_point) {
         this.id = id;
         this.list = projectList;
         this.title = title;
         this.description = description;
-        this.create_at = create_at;
+        this.start_at = start_at;
         this.end_at = end_at;
         this.type = type;
         this.story_point = story_point;

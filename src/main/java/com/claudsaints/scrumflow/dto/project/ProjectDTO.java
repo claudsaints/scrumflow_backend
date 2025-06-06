@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.time.Instant;
 
+//projeto_padrão_sem_embedding
+
 @NoArgsConstructor
 @Getter
 @Setter
