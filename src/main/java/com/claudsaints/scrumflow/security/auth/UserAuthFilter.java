@@ -1,19 +1,24 @@
 package com.claudsaints.scrumflow.security.auth;
+import com.claudsaints.scrumflow.controllers.exceptions.ObjectNotFound;
+import com.claudsaints.scrumflow.controllers.exceptions.TokenInvalid;
 import com.claudsaints.scrumflow.entities.User;
 import com.claudsaints.scrumflow.repositories.UserRepository;
 import com.claudsaints.scrumflow.security.config.SecurityConfiguration;
 import com.claudsaints.scrumflow.security.details.UserDetailsImpl;
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -28,9 +33,17 @@ public class UserAuthFilter extends OncePerRequestFilter {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    @Qualifier("handlerExceptionResolver")
+    private HandlerExceptionResolver resolver;
+
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            @Nonnull HttpServletRequest request,
+            @Nonnull HttpServletResponse response,
+            @Nonnull FilterChain filterChain) throws ServletException, IOException
+    {
         String requestURI = request.getRequestURI();
 
 
@@ -43,20 +56,28 @@ public class UserAuthFilter extends OncePerRequestFilter {
         if (!checkIfEndpointIsNotPublic(request)) {
             String token = recoveryToken(request);
             if (token != null) {
-                String subject = jwtTokenService.getSubjectFromToken(token);
-                Optional<User> optionalUser = userRepository.findByEmail(subject);
+                try {
+                    String subject = jwtTokenService.getSubjectFromToken(token);
 
-                if (optionalUser.isPresent()) {
-                    User user = optionalUser.get();
-                    UserDetailsImpl userDetails = new UserDetailsImpl(user);
-                    Authentication authentication = new UsernamePasswordAuthenticationToken(
-                            userDetails.getUsername(), null, userDetails.getAuthorities()
-                    );
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                } else {
-                    throw new RuntimeException("Usuário não encontrado.");
+                    Optional<User> optionalUser = userRepository.findByEmail(subject);
+
+                    if (optionalUser.isPresent()) {
+                        User user = optionalUser.get();
+                        UserDetailsImpl userDetails = new UserDetailsImpl(user);
+                        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                                userDetails.getUsername(), null, userDetails.getAuthorities()
+                        );
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    } else {
+                        resolver.resolveException(request, response, null, new ObjectNotFound("User not found"));
+                        throw new RuntimeException("ONão autorizado.");
+                    }
+                }catch (TokenInvalid e){
+                    resolver.resolveException(request, response, null, e);
+                    throw new RuntimeException("O token está inválido.");
                 }
             } else {
+                resolver.resolveException(request, response, null, new TokenInvalid("O token está ausente"));
                 throw new RuntimeException("O token está ausente.");
             }
         }

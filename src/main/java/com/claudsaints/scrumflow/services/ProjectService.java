@@ -1,23 +1,24 @@
 package com.claudsaints.scrumflow.services;
 
+import com.claudsaints.scrumflow.controllers.exceptions.ObjectNotFound;
 import com.claudsaints.scrumflow.dto.project.ProjectDTO;
 import com.claudsaints.scrumflow.dto.project.ProjectDataDTO;
 import com.claudsaints.scrumflow.entities.Project;
 import com.claudsaints.scrumflow.repositories.ProjectRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ProjectService {
 
 
-    private ProjectRepository repository;
+    private final ProjectRepository repository;
+
+    public ProjectService(ProjectRepository repository) {
+        this.repository = repository;
+    }
 
     public Project create(Project obj){
         obj.setCreate_At(Instant.now());
@@ -37,14 +38,12 @@ public class ProjectService {
     }
 
     public ProjectDataDTO findById(Long id){
-        Project project =  repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Projeto não encontrado"));
-        return new ProjectDataDTO(project);
+        return new ProjectDataDTO(this.findEntityById(id));
     }
 
     public Project findEntityById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Projeto não encontrado"));
+                .orElseThrow(() -> new ObjectNotFound("Projeto não encontrado"));
     }
 
 //    public Project update(Project obj){

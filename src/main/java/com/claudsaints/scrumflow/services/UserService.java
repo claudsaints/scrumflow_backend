@@ -1,4 +1,5 @@
 package com.claudsaints.scrumflow.services;
+import com.claudsaints.scrumflow.controllers.exceptions.ObjectNotFound;
 import com.claudsaints.scrumflow.dto.user.CreateUserDTO;
 import com.claudsaints.scrumflow.dto.user.LoginUserDTO;
 import com.claudsaints.scrumflow.dto.RecoveryJwtDTO;
@@ -10,23 +11,27 @@ import com.claudsaints.scrumflow.security.auth.JwtService;
 import com.claudsaints.scrumflow.security.config.SecurityConfiguration;
 import com.claudsaints.scrumflow.security.details.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
-    private RoleRepository roleRepository;
-    private UserRepository repository;
-    private AuthenticationManager authenticationManager;
-    private JwtService jwtTokenService;
-    private SecurityConfiguration securityConfiguration;
+    private final RoleRepository roleRepository;
+    private final UserRepository repository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtTokenService;
+    private final SecurityConfiguration securityConfiguration;
+
+    public UserService(RoleRepository roleRepository, UserRepository repository, AuthenticationManager authenticationManager, JwtService jwtTokenService, SecurityConfiguration securityConfiguration) {
+        this.roleRepository = roleRepository;
+        this.repository = repository;
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenService = jwtTokenService;
+        this.securityConfiguration = securityConfiguration;
+    }
 
     public void create(CreateUserDTO createUserDto){
         User newUser = new User();
@@ -45,13 +50,10 @@ public class UserService {
     }
 
     public RecoveryJwtDTO read(LoginUserDTO loginUserDto){
-        Optional<User> optionalUser = repository.findByEmail(loginUserDto.email());
+        User user = repository.findByEmail(loginUserDto.email()).orElseThrow(() -> new ObjectNotFound("usuário não encontrado"));
 
-        if (optionalUser.isEmpty()) {
-            throw new UsernameNotFoundException("Usuário não encontrado com o e-mail: " + loginUserDto.email());
-        }
 
-        User user = optionalUser.get();
+
 
         if (!securityConfiguration.passwordEncoder().matches(loginUserDto.password(), user.getPassword())) {
             throw new BadCredentialsException("Senha inválida.");
