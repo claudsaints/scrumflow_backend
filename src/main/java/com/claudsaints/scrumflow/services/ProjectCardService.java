@@ -2,12 +2,11 @@ package com.claudsaints.scrumflow.services;
 
 import com.claudsaints.scrumflow.controllers.exceptions.ObjectNotFound;
 import com.claudsaints.scrumflow.dto.card.CardBaseDTO;
+import com.claudsaints.scrumflow.dto.card.CreateCardDTO;
 import com.claudsaints.scrumflow.entities.Card;
 import com.claudsaints.scrumflow.entities.Label;
 import com.claudsaints.scrumflow.repositories.CardRepository;
 import com.claudsaints.scrumflow.repositories.LabelRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -26,15 +25,15 @@ public class ProjectCardService {
         this.projectListService = projectListService;
     }
 
-    public Card createCard(Long listId, CardBaseDTO dto) {
+    public Card createCard(Long listId, CreateCardDTO cardDTO) {
         var list = projectListService.findById(listId);
 
-        Set<Label> labels = loadLabels(dto.getLabelIds());
 
-        Card card = new Card(null, list, dto.getTitle(), dto.getDescription(), dto.getStartAt(),
-                dto.getEndAt(), dto.getType(), dto.getStoryPoint());
 
-        card.setLabels(labels);
+        Card card = new Card(null, list, cardDTO.title(),"", null,
+                null, null, null);
+
+
 
         return repository.save(card);
     }

@@ -50,10 +50,7 @@ public class UserService {
     }
 
     public RecoveryJwtDTO read(LoginUserDTO loginUserDto){
-        User user = repository.findByEmail(loginUserDto.email()).orElseThrow(() -> new ObjectNotFound("usuário não encontrado"));
-
-
-
+        User user = this.findByUserEmail(loginUserDto.email());
 
         if (!securityConfiguration.passwordEncoder().matches(loginUserDto.password(), user.getPassword())) {
             throw new BadCredentialsException("Senha inválida.");
@@ -81,6 +78,10 @@ public class UserService {
         entity.setName(obj.name());
         entity.setEmail(obj.email());
         entity.setPassword(securityConfiguration.passwordEncoder().encode(obj.password()));
+    }
+
+    public User findByUserEmail(String email){
+        return  repository.findByEmail(email).orElseThrow(() -> new ObjectNotFound("usuário não encontrado"));
     }
 
     public void delete(Long id){

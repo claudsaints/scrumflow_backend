@@ -19,9 +19,9 @@ public class ProjectController {
     @Autowired
     private ProjectService service;
 
-    @PostMapping
-    public ResponseEntity<Project> create(@RequestBody Project obj){
-        obj = service.create(obj);
+    @PostMapping("/{ownerEmail}")
+    public ResponseEntity<Project> create(@RequestBody Project obj, @PathVariable String ownerEmail){
+        obj = service.create(obj, ownerEmail);
         return  ResponseEntity.ok().body(obj);
     }
 

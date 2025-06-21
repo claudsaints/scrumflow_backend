@@ -5,9 +5,6 @@ import com.claudsaints.scrumflow.dto.ProjectMemberDTO;
 import com.claudsaints.scrumflow.entities.ProjectMembers;
 import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.repositories.ProjectMembersRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -4,9 +4,11 @@ import com.claudsaints.scrumflow.controllers.exceptions.ObjectNotFound;
 import com.claudsaints.scrumflow.dto.project.ProjectDTO;
 import com.claudsaints.scrumflow.dto.project.ProjectDataDTO;
 import com.claudsaints.scrumflow.entities.Project;
+import com.claudsaints.scrumflow.entities.ProjectMembers;
+import com.claudsaints.scrumflow.entities.User;
+import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.repositories.ProjectRepository;
 import org.springframework.stereotype.Service;
-
 import java.time.Instant;
 import java.util.List;
 
@@ -16,13 +18,29 @@ public class ProjectService {
 
     private final ProjectRepository repository;
 
-    public ProjectService(ProjectRepository repository) {
+    private final UserService userService;
+
+    private final ProjectMembersService membersService;
+
+    public ProjectService(ProjectRepository repository, UserService userService, ProjectMembersService membersService) {
         this.repository = repository;
+        this.userService = userService;
+        this.membersService = membersService;
     }
 
-    public Project create(Project obj){
+    public Project create(Project obj, String userEmail){
+        User owner = userService.findByUserEmail(userEmail);
+
         obj.setCreate_At(Instant.now());
-        return  repository.save(obj);
+
+        obj.setOwner(owner);
+
+        var saveProject = repository.save(obj);
+
+        membersService.addMember(new ProjectMembers(owner, saveProject, ProjectMemberRole.ADMIN, Instant.now()));
+
+        return  saveProject;
+
     }
 
     public List<ProjectDataDTO> findAll(){
