@@ -4,12 +4,14 @@ import com.claudsaints.scrumflow.dto.ProjectMemberDTO;
 import com.claudsaints.scrumflow.entities.ProjectMembers;
 import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.services.ProjectMembersService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/projects/members")
 public class ProjectMemberController {
     @Autowired

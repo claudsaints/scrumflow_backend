@@ -2,6 +2,7 @@ package com.claudsaints.scrumflow.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.*;
 
 import java.io.Serializable;
@@ -13,11 +14,13 @@ import java.util.Objects;
 @Table(name = "tb_user")
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = {"name","email","password"})
+@Getter @Setter
 public class User implements Serializable {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Getter private Long id;
-    @Getter @Setter @Column(unique = true) private String email;
-    @Getter @Setter private String name;
-    @Getter @Setter private String password;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
+    @Column(unique = true) private String email;
+    private String name;
+
+    private String password;
 
     @JsonIgnore
     @OneToMany(mappedBy = "owner")
@@ -27,7 +30,7 @@ public class User implements Serializable {
     @JoinTable(name="users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name="role_id"))
-    @Setter @Getter private List<Role> roles;
+    private List<Role> roles;
 
     public User(Long id, String name, String email, String password) {
         this.id = id;

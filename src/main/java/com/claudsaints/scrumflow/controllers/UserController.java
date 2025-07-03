@@ -4,6 +4,7 @@ import com.claudsaints.scrumflow.dto.user.LoginUserDTO;
 import com.claudsaints.scrumflow.dto.RecoveryJwtDTO;
 import com.claudsaints.scrumflow.entities.User;
 import com.claudsaints.scrumflow.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createUser(@RequestBody CreateUserDTO createUserDto) {
+    public ResponseEntity<Void> createUser(@Valid @RequestBody CreateUserDTO createUserDto) {
         service.create(createUserDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

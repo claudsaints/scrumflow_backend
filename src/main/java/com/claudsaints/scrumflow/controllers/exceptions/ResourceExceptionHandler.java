@@ -1,13 +1,14 @@
 package com.claudsaints.scrumflow.controllers.exceptions;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -32,6 +33,21 @@ public class ResourceExceptionHandler {
                 .build();
         return new ResponseEntity<>(resp, HttpStatus.NON_AUTHORITATIVE_INFORMATION);
 
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> methodArgumentNotValidException(MethodArgumentNotValidException e, WebRequest request){
+        String errors = e.getFieldErrors().stream()
+                .map(item -> item.getField() + ": " + item.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+
+        var response = StandardError.builder()
+                .error(errors)
+                .status(HttpStatus.BAD_REQUEST.value())
+                .path(request.getDescription(false).replace("uri=", ""))
+                .timestamp(new Date())
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -24,9 +24,13 @@ public class SecurityConfiguration {
 
     public static final String[] PUBLIC_ENDPOINTS = {
             "/h2-console/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/v3/api-docs/**",
             "/users/login",
             "/users",
-            "/favicon.ico"
+            "/favicon.ico",
+            "/index.html"
     };
 
     public static final String[] AUTHENTICATED_ENDPOINTS = {
@@ -53,6 +57,9 @@ public class SecurityConfiguration {
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/swagger-ui.html").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/users/login", "/users", "/user/update").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/users/**").hasAnyRole("ADMINISTRATOR", "CUSTOMER", "USER")
                         .requestMatchers(AUTHENTICATED_ENDPOINTS).authenticated()

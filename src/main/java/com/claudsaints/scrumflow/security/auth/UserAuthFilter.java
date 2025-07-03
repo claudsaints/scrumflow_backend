@@ -46,8 +46,9 @@ public class UserAuthFilter extends OncePerRequestFilter {
     {
         String requestURI = request.getRequestURI();
 
+        System.out.println(requestURI);
 
-        if (requestURI.startsWith("/h2-console") || requestURI.startsWith("/favicon.ico")) {
+        if (requestURI.startsWith("/h2-console") || requestURI.startsWith("/favicon.ico") ||  requestURI.contains("/swagger") || requestURI.contains("/v3/api-docs"))  {
             filterChain.doFilter(request, response);
             return;
         }
@@ -78,7 +79,7 @@ public class UserAuthFilter extends OncePerRequestFilter {
                 }
             } else {
                 resolver.resolveException(request, response, null, new TokenInvalid("O token está ausente"));
-                throw new RuntimeException("O token está ausente.");
+                throw new RuntimeException("O token está ausente." + requestURI);
             }
         }
 

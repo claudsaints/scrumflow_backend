@@ -5,6 +5,7 @@ import com.claudsaints.scrumflow.dto.project.ProjectDTO;
 import com.claudsaints.scrumflow.dto.project.ProjectDataDTO;
 import com.claudsaints.scrumflow.entities.Project;
 import com.claudsaints.scrumflow.services.ProjectService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping(value = "/projects")
 public class ProjectController {
 

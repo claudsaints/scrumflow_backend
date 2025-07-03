@@ -5,6 +5,7 @@ import com.claudsaints.scrumflow.dto.card.CardBaseDTO;
 import com.claudsaints.scrumflow.dto.card.CreateCardDTO;
 import com.claudsaints.scrumflow.entities.Card;
 import com.claudsaints.scrumflow.services.ProjectCardService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/projects/cards")
 public class ProjectCardController {
 
