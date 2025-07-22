@@ -26,7 +26,7 @@ public class ProjectDataDTO {
 
     private Set<ProjectMemberDTO> members = new HashSet<>();
 
-    private Set<ProjectListDTO> lists = new HashSet<ProjectListDTO>();
+    private Set<Section> sections = new HashSet<>();
 
     private Set<Label> labels = new HashSet<>();
 
@@ -40,7 +40,8 @@ public class ProjectDataDTO {
         this.owner = new UserDTO(obj.getOwner());
 
         obj.getMembers().forEach(m -> members.add(new ProjectMemberDTO(m)));
-        obj.getLists().forEach(l -> this.lists.add(new ProjectListDTO(l)));
-;
+
+        obj.getSections().forEach(s -> this.sections.add(s));
+
     }
 }

@@ -22,9 +22,9 @@ public class ProjectList implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "section_id")
     @JsonIgnore
-    private Project project;
+    private Section section;
 
 
     @Setter private String title;
@@ -34,9 +34,9 @@ public class ProjectList implements Serializable {
     @OneToMany(mappedBy = "list")
     Set<Card> cardList = new HashSet<>();
 
-    public ProjectList(Long id, Project project, String title, Integer position, Instant create_at) {
+    public ProjectList(Long id, Section section, String title, Integer position, Instant create_at) {
         this.id = id;
-        this.project = project;
+        this.section = section;
         this.title = title;
         this.position = position;
         this.create_at = create_at;

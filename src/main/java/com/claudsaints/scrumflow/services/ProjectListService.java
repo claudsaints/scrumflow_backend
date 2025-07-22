@@ -5,7 +5,9 @@ import com.claudsaints.scrumflow.dto.projectList.CreateProjectListDTO;
 import com.claudsaints.scrumflow.dto.projectList.ProjectListDTO;
 import com.claudsaints.scrumflow.entities.Project;
 import com.claudsaints.scrumflow.entities.ProjectList;
+import com.claudsaints.scrumflow.entities.Section;
 import com.claudsaints.scrumflow.repositories.ListRepository;
+import com.claudsaints.scrumflow.repositories.SectionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +23,21 @@ import java.util.Optional;
 public class ProjectListService {
 
     private final ListRepository repository;
-    private final ProjectService projectService;
 
-    public ProjectListService(ListRepository repository, ProjectService projectService) {
+    @Autowired
+    private SectionService sectionService;
+
+    public ProjectListService(ListRepository repository) {
         this.repository = repository;
-        this.projectService = projectService;
     }
 
-    public ProjectList createList(Long projectId, CreateProjectListDTO list) {
 
-        Project project = projectService.findEntityById(projectId);
 
-        ProjectList list1 = new ProjectList( null,project, list.getTitle(), list.getPosition(), Instant.now());
+    public ProjectList createList(Long sectionId, CreateProjectListDTO list) {
+
+        Section section = sectionService.findById(sectionId);
+
+        ProjectList list1 = new ProjectList( null,section, list.getTitle(), list.getPosition(), Instant.now());
 
         return repository.save(list1);
     }
@@ -59,13 +64,16 @@ public class ProjectListService {
 
 
     public List<ProjectList> findAll(Long id){
-        return repository.findAllByProjectId(id).stream()
+        return repository.findAllBySectionId(id).stream()
                 .sorted(Comparator.comparingInt(ProjectList::getPosition))
                 .toList();
     }
+
 
     public ProjectList findById(Long id){
         return  repository.findById(id)
                 .orElseThrow(() -> new ObjectNotFound("List not found"));
     }
+
+
 }

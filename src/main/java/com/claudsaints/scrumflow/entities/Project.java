@@ -34,7 +34,7 @@ public class Project implements Serializable {
     private Set<ProjectMembers> members = new HashSet<>();
 
     @OneToMany(mappedBy = "project")
-    private Set<ProjectList> lists = new HashSet<>();
+    private Set<Section> sections = new HashSet<>();
 
     @OneToMany(mappedBy = "project")
     private Set<Label> labels = new HashSet<>();

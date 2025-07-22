@@ -35,6 +35,8 @@ public class Config implements CommandLineRunner {
     @Autowired
     private CardRepository cardRepository;
 
+    @Autowired
+    private SectionRepository sectionRepository;
 
     @Autowired
     private LabelRepository labelRepository;
@@ -61,6 +63,7 @@ public class Config implements CommandLineRunner {
         u1.setRoles(Arrays.asList(adm,simple));
 
         User u2 = new User(null,"maria","maria@gmail.com","123456");
+
         User u3 = new User(null,"pedro","pedro@gmail.com","123456");
 
         userRepository.saveAll(Arrays.asList(u1,u2,u3));
@@ -76,10 +79,18 @@ public class Config implements CommandLineRunner {
 
         projectMembersRepository.saveAll(Arrays.asList(pm0,pm1,pm2,pm3));
 
-        ProjectList l1  = new ProjectList(null,p1,"To Do", 0 , Instant.now() );
-        ProjectList l2  = new ProjectList(null,p1,"Done", 1 , Instant.now() );
+        Section s1 = new Section(null, "Sprint 1", "Prototipagem",  p1 );
+        Section s2 = new Section(null, "Sprint 2", "Desenvolvimento",  p1 );
 
-        projectListRepository.saveAll(Arrays.asList(l1,l2));
+        this.sectionRepository.saveAll(Arrays.asList(s1,s2));
+
+        //TODO: verificar a geração de posições automatica na inicialização de um nova lista?
+
+        ProjectList l1  = new ProjectList(null,s1,"To Do", 0 , Instant.now() );
+        ProjectList l2  = new ProjectList(null,s1,"Doing", 1 ,Instant.now() );
+        ProjectList l3  = new ProjectList(null,s1,"Done",2, Instant.now() );
+
+        projectListRepository.saveAll(Arrays.asList(l1,l2,l3));
 
         Card c1 = new Card(null,l1,"criar entidades","criar novas entidades com framework spring",Instant.now(),null,"user story",5);
         Card c2 = new Card(null,l1,"criar repositories","criar novos repositories para salvar dados",Instant.now(),null,"user story",2);
