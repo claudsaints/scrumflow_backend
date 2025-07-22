@@ -8,8 +8,10 @@ import com.claudsaints.scrumflow.entities.ProjectMembers;
 import com.claudsaints.scrumflow.entities.User;
 import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.repositories.ProjectRepository;
+import org.hibernate.query.QueryTypeMismatchException;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,12 +49,20 @@ public class ProjectService {
         return  repository.findAll().stream().map(ProjectDataDTO::new).toList();
     }
 
-    public List<ProjectDTO> findByOwnerEmail(String email){
-        return  repository.findByOwnerEmail(email);
-    }
-
     public List<ProjectDTO> findByMemberEmail(String email){
-        return  repository.findByMembersIdUserEmail(email);
+        try{
+
+             List<Project> projects = repository.findByMembersIdUserEmail(email);
+
+             List<ProjectDTO>  projectDTOList  = new ArrayList<>(projects.stream().map(p -> new ProjectDTO(p)).toList());
+
+             return projectDTOList;
+
+        }catch (QueryTypeMismatchException e){
+            throw e;
+        }
+
+
     }
 
     public ProjectDataDTO findById(Long id){

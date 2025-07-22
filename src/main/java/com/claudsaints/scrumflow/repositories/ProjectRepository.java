@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProjectRepository  extends JpaRepository<Project,Long> {
-    List<ProjectDTO> findByOwnerEmail(String email);
-    List<ProjectDTO> findByMembersIdUserEmail(String email);
+    List<Project> findByOwnerEmail(String email);
+    List<Project> findByMembersIdUserEmail(String email);
 }

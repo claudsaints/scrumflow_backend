@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping(value = "/projects")
 public class ProjectController {
 
@@ -39,16 +38,10 @@ public class ProjectController {
         return  new ResponseEntity<>( obj,HttpStatus.OK);
     }
 
-    @GetMapping(value = "/owner/")
-    public ResponseEntity<List<ProjectDTO>> findUserProjects(@RequestParam String email){
-        List<ProjectDTO> obj = service.findByOwnerEmail(email);
-        return  new ResponseEntity<>( obj ,HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/members/")
+    @GetMapping(value = "/member/")
     public ResponseEntity<List<ProjectDTO>> findMemberProjects(@RequestParam String email){
         List<ProjectDTO> obj = service.findByMemberEmail(email);
-        return  new ResponseEntity<>( obj ,HttpStatus.OK);
+        return  new ResponseEntity<>( obj ,HttpStatus.FOUND);
     }
 
 }
