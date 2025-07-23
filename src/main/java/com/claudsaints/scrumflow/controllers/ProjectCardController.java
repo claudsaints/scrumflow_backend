@@ -20,6 +20,16 @@ public class ProjectCardController {
     @Autowired
     private ProjectCardService service;
 
+
+    @GetMapping("/{cardId}")
+    public ResponseEntity<Card> findById(
+            @PathVariable Long cardId
+    ) {
+        Card card = service.findById(cardId);
+
+        return new ResponseEntity<>(card, HttpStatus.OK);
+    }
+
     @PostMapping("/{listId}")
     public ResponseEntity<Card> create(
             @RequestBody CreateCardDTO cardDTO,
@@ -39,4 +49,14 @@ public class ProjectCardController {
 
         return new ResponseEntity<>(newCard, HttpStatus.ACCEPTED);
     }
+
+    @DeleteMapping(value = "/{cardId}")
+    public ResponseEntity<Void> delete(
+            @PathVariable Long cardId
+    ) {
+        service.delete(cardId);
+
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
 }
