@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
-@RequestMapping("/projects/members")
+@RequestMapping("/project/members")
 public class ProjectMemberController {
     @Autowired
     ProjectMembersService service;

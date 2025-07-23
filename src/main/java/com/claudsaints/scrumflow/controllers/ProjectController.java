@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/projects")
+@RequestMapping(value = "/project")
 public class ProjectController {
 
     @Autowired

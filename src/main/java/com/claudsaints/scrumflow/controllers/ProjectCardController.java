@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
-@RequestMapping("/projects/cards")
+@RequestMapping("/project/cards")
 public class ProjectCardController {
 
     @Autowired
