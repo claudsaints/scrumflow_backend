@@ -16,11 +16,11 @@ public class SectionController {
     @Autowired
     private SectionService service;
 
-    @GetMapping(value = "/{projectId}")
-    public ResponseEntity<List<Section>> findAllByProject(@PathVariable Long projectId){
-       List<Section> sections =  service.findAll(projectId);
+    @PostMapping(value = "/{projectId}")
+    public ResponseEntity<Section> create(@RequestBody CreateSectionDTO sectionDTO, @PathVariable Long projectId){
+        var section = service.create(sectionDTO,projectId);
 
-       return new ResponseEntity<>(sections, HttpStatus.OK);
+        return new ResponseEntity<>(section,HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
@@ -30,13 +30,13 @@ public class SectionController {
         return new ResponseEntity<>(section, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/{projectId}")
-    public ResponseEntity<Section> create(@RequestBody CreateSectionDTO sectionDTO, @PathVariable Long projectId){
-        var section = service.create(sectionDTO,projectId);
+    @GetMapping
+    public ResponseEntity<List<Section>> findAllByProject(@RequestParam Long projectId){
+       List<Section> sections =  service.findAll(projectId);
 
-        return new ResponseEntity<>(section,HttpStatus.OK);
-
+       return new ResponseEntity<>(sections, HttpStatus.OK);
     }
+
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){

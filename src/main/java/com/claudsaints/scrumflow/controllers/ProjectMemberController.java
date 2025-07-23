@@ -19,6 +19,12 @@ public class ProjectMemberController {
     @Autowired
     ProjectMembersService service;
 
+    @PostMapping
+    public ResponseEntity<ProjectMembers> addMember(@RequestBody ProjectMembers member) {
+        member = service.addMember(member);
+        return new ResponseEntity<>(member, HttpStatus.CREATED);
+    }
+
     @GetMapping(value = "/{projectId}")
     public ResponseEntity<List<ProjectMembers>> findAllByProject(@PathVariable Long projectId){
         List<ProjectMembers> members = service.findAllByProjectId(projectId);
@@ -27,11 +33,6 @@ public class ProjectMemberController {
 
     }
 
-    @PostMapping
-    public ResponseEntity<ProjectMembers> addMember(@RequestBody ProjectMembers member) {
-        member = service.addMember(member);
-        return new ResponseEntity<>(member, HttpStatus.CREATED);
-    }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<ProjectMemberDTO> updateMemberRole(@PathVariable Long id, @RequestParam ProjectMemberRole newRole) {
