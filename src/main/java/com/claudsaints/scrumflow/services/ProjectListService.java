@@ -36,7 +36,9 @@ public class ProjectListService {
 
         Section section = sectionService.findById(sectionId);
 
-        ProjectList list1 = new ProjectList(null, section, list.getTitle(), list.getPosition(), Instant.now());
+        int newPosition = repository.findBySectionIdTopByOrderByPosicaoDesc(sectionId).map( l -> l.getPosition() + 1 ).orElse(0);
+
+        ProjectList list1 = new ProjectList(null, section, list.getTitle(), newPosition, Instant.now());
 
         return repository.save(list1);
     }
@@ -71,6 +73,10 @@ public class ProjectListService {
     public ProjectList findById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ObjectNotFound("List not found"));
+    }
+
+    public void deleteById(Long listId){
+        repository.deleteById(listId);
     }
 
 
