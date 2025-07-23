@@ -84,7 +84,6 @@ public class Config implements CommandLineRunner {
 
         this.sectionRepository.saveAll(Arrays.asList(s1, s2));
 
-        //TODO: verificar a geração de posições automatica na inicialização de um nova lista?
 
         ProjectList l1 = new ProjectList(null, s1, "To Do", 0, Instant.now());
         ProjectList l2 = new ProjectList(null, s1, "Doing", 1, Instant.now());
@@ -104,9 +103,11 @@ public class Config implements CommandLineRunner {
         labelRepository.saveAll(Arrays.asList(lb1, lb2));
 
 
-        Sprint sp1 = new Sprint(null, p1, "one", null, null, "create backend");
+        Sprint sp1 = new Sprint(null, p1, s1, "one", null, null, "create backend");
+        Sprint sp2 = new Sprint(null, p1, s2, "one", null, null, "create frontend");
 
 
+        sprintRepository.saveAll(Arrays.asList( sp1, sp2));
 
 
     }
