@@ -24,19 +24,19 @@ public class ProjectCardController {
     public ResponseEntity<Card> create(
             @RequestBody CreateCardDTO cardDTO,
             @PathVariable Long listId
-                                       ){
-        Card newCard =  service.createCard(listId,cardDTO);
+    ) {
+        Card newCard = service.createCard(listId, cardDTO);
 
-        return new ResponseEntity<>( newCard,HttpStatus.CREATED);
+        return new ResponseEntity<>(newCard, HttpStatus.CREATED);
     }
 
     @PutMapping("/{cardId}")
     public ResponseEntity<Card> update(
             @RequestBody CardBaseDTO card,
             @PathVariable Long cardId
-    ){
-        Card newCard =  service.updateCard(cardId,card);
+    ) {
+        Card newCard = service.updateCard(cardId, card);
 
-        return new ResponseEntity<>( newCard,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(newCard, HttpStatus.ACCEPTED);
     }
 }

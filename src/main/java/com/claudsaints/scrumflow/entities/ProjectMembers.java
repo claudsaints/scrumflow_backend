@@ -19,12 +19,14 @@ import java.time.Instant;
 public class ProjectMembers implements Serializable {
     @EmbeddedId
     private ProjectMembersPk id = new ProjectMembersPk();
-    @Getter @Setter
+    @Getter
+    @Setter
     private ProjectMemberRole role;
-    @Getter @Setter
+    @Getter
+    @Setter
     private Instant join_at;
 
-    public ProjectMembers(User user , Project project, ProjectMemberRole role, Instant join_at) {
+    public ProjectMembers(User user, Project project, ProjectMemberRole role, Instant join_at) {
         this.id.setProject(project);
         this.id.setUser(user);
         this.role = role;
@@ -32,12 +34,13 @@ public class ProjectMembers implements Serializable {
     }
 
     @JsonIgnore
-    public User getUser(){
+    public User getUser() {
         return this.id.getUser();
     }
+
     @JsonIgnore
-    public Project getProject(){
-        return  this.id.getProject();
+    public Project getProject() {
+        return this.id.getProject();
     }
 
 

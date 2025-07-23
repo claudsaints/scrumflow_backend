@@ -20,27 +20,25 @@ public class ProjectListController {
     private ProjectListService service;
 
     @GetMapping
-    public ResponseEntity<List<ProjectList>> findAll(@RequestParam Long projectId){
+    public ResponseEntity<List<ProjectList>> findAll(@RequestParam Long projectId) {
         List<ProjectList> projectLists = service.findAll(projectId);
         return new ResponseEntity<>(projectLists, HttpStatus.FOUND);
     }
 
     @PostMapping("/{projectId}")
-    public ResponseEntity<ProjectList> create(@RequestBody CreateProjectListDTO listDTO, @PathVariable Long projectId){
-        ProjectList list = service.createList(projectId,listDTO);
+    public ResponseEntity<ProjectList> create(@RequestBody CreateProjectListDTO listDTO, @PathVariable Long projectId) {
+        ProjectList list = service.createList(projectId, listDTO);
 
         return new ResponseEntity<>(list, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<String> update(@RequestParam Long projectId, Long listId, int newPos){
+    public ResponseEntity<String> update(@RequestParam Long projectId, Long listId, int newPos) {
 
         service.updatePosition(projectId, listId, newPos);
 
-        return new ResponseEntity<>( "Posição da lista alterada com sucesso", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Posição da lista alterada com sucesso", HttpStatus.ACCEPTED);
     }
-
-
 
 
 }

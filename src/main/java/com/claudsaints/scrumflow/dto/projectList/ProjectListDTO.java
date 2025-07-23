@@ -20,7 +20,7 @@ public class ProjectListDTO {
     private Instant create_at;
     private Set<CardDTO> cardList = new HashSet<CardDTO>();
 
-    public ProjectListDTO(ProjectList obj){
+    public ProjectListDTO(ProjectList obj) {
         this.id = obj.getId();
         this.title = obj.getTitle();
         this.position = obj.getPosition();

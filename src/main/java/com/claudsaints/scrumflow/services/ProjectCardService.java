@@ -29,10 +29,8 @@ public class ProjectCardService {
         var list = projectListService.findById(listId);
 
 
-
-        Card card = new Card(null, list, cardDTO.title(),"", null,
+        Card card = new Card(null, list, cardDTO.title(), "", null,
                 null, null, null);
-
 
 
         return repository.save(card);
@@ -62,7 +60,7 @@ public class ProjectCardService {
         return new HashSet<>(labelRepository.findAllById(labelIds));
     }
 
-    private Card findById(Long id){
+    private Card findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new ObjectNotFound("Card not found"));
     }
 }

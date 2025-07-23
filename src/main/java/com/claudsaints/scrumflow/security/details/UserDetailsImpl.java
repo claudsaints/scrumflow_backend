@@ -8,11 +8,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class UserDetailsImpl  implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     private User user;
 
-    public UserDetailsImpl(User obj){
+    public UserDetailsImpl(User obj) {
         this.user = obj;
 
     }
@@ -35,8 +35,8 @@ public class UserDetailsImpl  implements UserDetails {
         return user.getEmail();
     }
 
-    public String getEmail(){
-        return  user.getEmail();
+    public String getEmail() {
+        return user.getEmail();
     }
 
 

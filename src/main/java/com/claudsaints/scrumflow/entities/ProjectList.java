@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name ="tb_project_list")
+@Table(name = "tb_project_list")
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"title","position","create_at"})
+@EqualsAndHashCode(exclude = {"title", "position", "create_at"})
 @Getter
 public class ProjectList implements Serializable {
     @Id
@@ -27,9 +27,12 @@ public class ProjectList implements Serializable {
     private Section section;
 
 
-    @Setter private String title;
-    @Setter private Integer position;
-    @Setter private Instant create_at;
+    @Setter
+    private String title;
+    @Setter
+    private Integer position;
+    @Setter
+    private Instant create_at;
 
     @OneToMany(mappedBy = "list")
     Set<Card> cardList = new HashSet<>();

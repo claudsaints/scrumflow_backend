@@ -20,48 +20,48 @@ public class ProjectController {
     private ProjectService service;
 
     @PostMapping("/{ownerEmail}")
-    public ResponseEntity<Project> create(@RequestBody Project obj, @PathVariable String ownerEmail){
+    public ResponseEntity<Project> create(@RequestBody Project obj, @PathVariable String ownerEmail) {
         obj = service.create(obj, ownerEmail);
-        return  ResponseEntity.ok().body(obj);
+        return ResponseEntity.ok().body(obj);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ProjectDataDTO> findById(@PathVariable Long id){
+    public ResponseEntity<ProjectDataDTO> findById(@PathVariable Long id) {
         ProjectDataDTO obj = service.findById(id);
-        return new ResponseEntity<>(obj,HttpStatus.FOUND);
+        return new ResponseEntity<>(obj, HttpStatus.FOUND);
     }
 
     @GetMapping
-    public ResponseEntity<List<ProjectDataDTO>> findAll(){
+    public ResponseEntity<List<ProjectDataDTO>> findAll() {
         List<ProjectDataDTO> obj = service.findAll();
-        return  new ResponseEntity<>( obj,HttpStatus.OK);
+        return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
     @GetMapping(value = "/member/")
-    public ResponseEntity<List<ProjectDTO>> findMemberProjects(@RequestParam String email){
+    public ResponseEntity<List<ProjectDTO>> findMemberProjects(@RequestParam String email) {
         List<ProjectDTO> obj = service.findByMemberEmail(email);
-        return  new ResponseEntity<>( obj ,HttpStatus.FOUND);
+        return new ResponseEntity<>(obj, HttpStatus.FOUND);
     }
 
     @PutMapping()
-    public ResponseEntity<Project> updateProjectHeader(@RequestBody ProjectDTO projectDTO){
+    public ResponseEntity<Project> updateProjectHeader(@RequestBody ProjectDTO projectDTO) {
         Project updatedProject = service.updateTitleAndDescription(projectDTO);
-        return new ResponseEntity<>(updatedProject,HttpStatus.OK);
+        return new ResponseEntity<>(updatedProject, HttpStatus.OK);
     }
 
 
     @PutMapping(value = "/{id}/{imageUrl}")
-    public ResponseEntity<String> updateBackgroundImage(@PathVariable Long id,String imageUrl){
-        service.updateBackgroundImage(id,imageUrl);
+    public ResponseEntity<String> updateBackgroundImage(@PathVariable Long id, String imageUrl) {
+        service.updateBackgroundImage(id, imageUrl);
 
         return new ResponseEntity<>(imageUrl, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.service.delete(id);
 
-        return  new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

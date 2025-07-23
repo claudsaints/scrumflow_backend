@@ -32,12 +32,11 @@ public class ProjectListService {
     }
 
 
-
     public ProjectList createList(Long sectionId, CreateProjectListDTO list) {
 
         Section section = sectionService.findById(sectionId);
 
-        ProjectList list1 = new ProjectList( null,section, list.getTitle(), list.getPosition(), Instant.now());
+        ProjectList list1 = new ProjectList(null, section, list.getTitle(), list.getPosition(), Instant.now());
 
         return repository.save(list1);
     }
@@ -49,29 +48,28 @@ public class ProjectListService {
 
         Optional<ProjectList> listAlreadyExist = allLists.stream().filter(e -> e.getPosition() == newPos).findFirst();
 
-        if(listAlreadyExist.isEmpty()){
+        if (listAlreadyExist.isEmpty()) {
             targetList.setPosition(newPos);
             return repository.save(targetList);
-        }else {
+        } else {
             listAlreadyExist.get().setPosition(targetList.getPosition());
             targetList.setPosition(newPos);
-            repository.saveAll(Arrays.asList(listAlreadyExist.get(),targetList));
+            repository.saveAll(Arrays.asList(listAlreadyExist.get(), targetList));
             return targetList;
 
         }
     }
 
 
-
-    public List<ProjectList> findAll(Long id){
+    public List<ProjectList> findAll(Long id) {
         return repository.findAllBySectionId(id).stream()
                 .sorted(Comparator.comparingInt(ProjectList::getPosition))
                 .toList();
     }
 
 
-    public ProjectList findById(Long id){
-        return  repository.findById(id)
+    public ProjectList findById(Long id) {
+        return repository.findById(id)
                 .orElseThrow(() -> new ObjectNotFound("List not found"));
     }
 

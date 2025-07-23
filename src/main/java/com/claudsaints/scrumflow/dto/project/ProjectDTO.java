@@ -22,7 +22,6 @@ public class ProjectDTO {
     private UserDTO owner;
 
 
-
     public ProjectDTO(Project obj) {
         this.id = obj.getId();
         this.title = obj.getTitle();

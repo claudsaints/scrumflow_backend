@@ -1,4 +1,5 @@
 package com.claudsaints.scrumflow.security.auth;
+
 import com.claudsaints.scrumflow.controllers.exceptions.ObjectNotFound;
 import com.claudsaints.scrumflow.controllers.exceptions.TokenInvalid;
 import com.claudsaints.scrumflow.entities.User;
@@ -42,13 +43,12 @@ public class UserAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             @Nonnull HttpServletRequest request,
             @Nonnull HttpServletResponse response,
-            @Nonnull FilterChain filterChain) throws ServletException, IOException
-    {
+            @Nonnull FilterChain filterChain) throws ServletException, IOException {
         String requestURI = request.getRequestURI();
 
         System.out.println(requestURI);
 
-        if (requestURI.startsWith("/h2-console") || requestURI.startsWith("/favicon.ico") ||  requestURI.contains("/swagger") || requestURI.contains("/v3/api-docs"))  {
+        if (requestURI.startsWith("/h2-console") || requestURI.startsWith("/favicon.ico") || requestURI.contains("/swagger") || requestURI.contains("/v3/api-docs")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -73,7 +73,7 @@ public class UserAuthFilter extends OncePerRequestFilter {
                         resolver.resolveException(request, response, null, new ObjectNotFound("User not found"));
                         throw new RuntimeException("ONão autorizado.");
                     }
-                }catch (TokenInvalid e){
+                } catch (TokenInvalid e) {
                     resolver.resolveException(request, response, null, e);
                     throw new RuntimeException("O token está inválido.");
                 }
@@ -85,6 +85,7 @@ public class UserAuthFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
     private String recoveryToken(HttpServletRequest request) {
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null) {

@@ -18,15 +18,15 @@ public class ProjectMemberController {
     ProjectMembersService service;
 
     @PostMapping
-    public ResponseEntity<ProjectMembers> addMember(@RequestBody ProjectMembers member){
+    public ResponseEntity<ProjectMembers> addMember(@RequestBody ProjectMembers member) {
         member = service.addMember(member);
-        return new ResponseEntity<>(member , HttpStatus.CREATED);
+        return new ResponseEntity<>(member, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}")
-    public  ResponseEntity<ProjectMemberDTO> updateMemberRole(@PathVariable Long id, @RequestParam ProjectMemberRole newRole){
-        ProjectMemberDTO member = service.updateRole(id,newRole);
-        return new ResponseEntity<>( member, HttpStatus.OK);
+    public ResponseEntity<ProjectMemberDTO> updateMemberRole(@PathVariable Long id, @RequestParam ProjectMemberRole newRole) {
+        ProjectMemberDTO member = service.updateRole(id, newRole);
+        return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
 }

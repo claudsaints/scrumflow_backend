@@ -18,7 +18,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Card  implements Serializable {
+public class Card implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -52,7 +52,6 @@ public class Card  implements Serializable {
         this.type = type;
         this.story_point = story_point;
     }
-
 
 
 }

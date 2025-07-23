@@ -17,7 +17,7 @@ public class ProjectMemberDTO {
     private UserDTO user;
     private Instant join_at;
 
-    public ProjectMemberDTO(ProjectMembers obj){
+    public ProjectMemberDTO(ProjectMembers obj) {
         this.role = obj.getRole();
         this.user = new UserDTO(obj.getUser());
         this.join_at = obj.getJoin_at();

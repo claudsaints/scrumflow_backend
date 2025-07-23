@@ -17,26 +17,26 @@ public class ProjectMembersService {
         this.repository = repository;
     }
 
-    public ProjectMembers addMember(ProjectMembers member){
+    public ProjectMembers addMember(ProjectMembers member) {
         return repository.save(member);
     }
 
 
-    public ProjectMembers findById(Long id){
+    public ProjectMembers findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new ObjectNotFound("Não foi possível encontrar esse membro no projeto"));
     }
 
-    public ProjectMemberDTO updateRole(Long id, ProjectMemberRole newRole){
+    public ProjectMemberDTO updateRole(Long id, ProjectMemberRole newRole) {
         ProjectMembers member = findById(id);
 
         member.setRole(newRole);
 
-       repository.save(member);
+        repository.save(member);
 
-       return new ProjectMemberDTO(member);
+        return new ProjectMemberDTO(member);
     }
 
-    public void removeMember(Long id){
+    public void removeMember(Long id) {
         repository.deleteById(id);
     }
 }

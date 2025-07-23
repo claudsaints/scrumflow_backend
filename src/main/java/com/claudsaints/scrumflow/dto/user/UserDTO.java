@@ -12,7 +12,7 @@ public class UserDTO {
     private String name;
     private String email;
 
-    public UserDTO(User obj){
+    public UserDTO(User obj) {
         name = obj.getName();
         email = obj.getEmail();
     }

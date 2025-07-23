@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.claudsaints.scrumflow.controllers.exceptions.TokenInvalid;
 import com.claudsaints.scrumflow.security.details.UserDetailsImpl;
 import org.springframework.stereotype.Service;
+
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -25,7 +26,7 @@ public class JwtService {
                     .withExpiresAt(expirationDate())
                     .withSubject(user.getEmail())
                     .sign(algorithm);
-        } catch (JWTCreationException exception){
+        } catch (JWTCreationException exception) {
             throw new JWTCreationException("Erro ao gerar token.", exception);
         }
     }
@@ -38,7 +39,7 @@ public class JwtService {
                     .build()
                     .verify(token)
                     .getSubject();
-        } catch (JWTVerificationException exception){
+        } catch (JWTVerificationException exception) {
             throw new TokenInvalid("Token inválido ou expirado.");
         }
     }

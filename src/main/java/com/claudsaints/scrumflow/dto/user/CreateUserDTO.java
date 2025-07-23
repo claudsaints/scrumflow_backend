@@ -1,8 +1,9 @@
 package com.claudsaints.scrumflow.dto.user;
+
 import com.claudsaints.scrumflow.entities.enums.RoleName;
 import jakarta.validation.constraints.*;
 
-public record CreateUserDTO (
+public record CreateUserDTO(
         @NotBlank(message = "O nome é obrigatório")
         @Size(min = 2, max = 255)
         String name,
@@ -18,4 +19,5 @@ public record CreateUserDTO (
 
         @NotNull(message = "O papel é obrigatório")
         RoleName role
-) {}
+) {
+}

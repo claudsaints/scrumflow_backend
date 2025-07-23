@@ -1,4 +1,5 @@
 package com.claudsaints.scrumflow.services;
+
 import com.claudsaints.scrumflow.controllers.exceptions.ObjectNotFound;
 import com.claudsaints.scrumflow.dto.user.CreateUserDTO;
 import com.claudsaints.scrumflow.dto.user.LoginUserDTO;
@@ -33,7 +34,7 @@ public class UserService {
         this.securityConfiguration = securityConfiguration;
     }
 
-    public void create(CreateUserDTO createUserDto){
+    public void create(CreateUserDTO createUserDto) {
         User newUser = new User();
         newUser.setEmail(createUserDto.email());
         newUser.setPassword(securityConfiguration.passwordEncoder().encode(createUserDto.password()));
@@ -49,7 +50,7 @@ public class UserService {
         new CreateUserDTO(savedUser.getName(), savedUser.getEmail(), null, createUserDto.role());
     }
 
-    public RecoveryJwtDTO read(LoginUserDTO loginUserDto){
+    public RecoveryJwtDTO read(LoginUserDTO loginUserDto) {
         User user = this.findByUserEmail(loginUserDto.email());
 
         if (!securityConfiguration.passwordEncoder().matches(loginUserDto.password(), user.getPassword())) {
@@ -61,34 +62,36 @@ public class UserService {
 
         return new RecoveryJwtDTO(token);
     }
-    public User update(Long id, CreateUserDTO user){
-       try{
-           System.out.println("User" + user + id);
+
+    public User update(Long id, CreateUserDTO user) {
+        try {
+            System.out.println("User" + user + id);
             User entity = repository.getReferenceById(id);
 
-            updateData(entity,user);
+            updateData(entity, user);
 
             return repository.save(entity);
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new RuntimeException("Resource Not found");
 
         }
     }
-    public void updateData(User entity, CreateUserDTO obj){
+
+    public void updateData(User entity, CreateUserDTO obj) {
         entity.setName(obj.name());
         entity.setEmail(obj.email());
         entity.setPassword(securityConfiguration.passwordEncoder().encode(obj.password()));
     }
 
-    public User findByUserEmail(String email){
-        return  repository.findByEmail(email).orElseThrow(() -> new ObjectNotFound("usuário não encontrado"));
+    public User findByUserEmail(String email) {
+        return repository.findByEmail(email).orElseThrow(() -> new ObjectNotFound("usuário não encontrado"));
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         return repository.findAll();
     }
 

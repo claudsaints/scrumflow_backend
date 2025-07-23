@@ -1,4 +1,5 @@
 package com.claudsaints.scrumflow.controllers;
+
 import com.claudsaints.scrumflow.dto.user.CreateUserDTO;
 import com.claudsaints.scrumflow.dto.user.LoginUserDTO;
 import com.claudsaints.scrumflow.dto.RecoveryJwtDTO;
@@ -29,15 +30,17 @@ class UserController {
         service.create(createUserDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     @PutMapping(value = "/update/{id}")
     public ResponseEntity<User> updateUser(@RequestBody CreateUserDTO obj, @PathVariable Long id) {
         User usr = service.update(id, obj);
         return ResponseEntity.ok().body(usr);
     }
+
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         service.delete(id);
-        return  ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();
 
     }
 

@@ -12,7 +12,9 @@ import java.util.Set;
 @Table(name = "tb_section")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Section {
     @Id
@@ -30,16 +32,12 @@ public class Section {
     @JsonIgnore
     private Project project;
 
-    public Section(Long id, String title, String description,Project project) {
+    public Section(Long id, String title, String description, Project project) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.project = project;
     }
-
-
-
-
 
 
 }

@@ -1,4 +1,5 @@
 package com.claudsaints.scrumflow.security.details;
+
 import com.claudsaints.scrumflow.entities.User;
 import com.claudsaints.scrumflow.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

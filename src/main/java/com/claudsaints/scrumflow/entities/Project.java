@@ -1,6 +1,8 @@
 package com.claudsaints.scrumflow.entities;
+
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -18,10 +20,10 @@ public class Project implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include()
-    private  Long id;
-    private  String title;
-    private  String description;
-    private  String backgroundImage;
+    private Long id;
+    private String title;
+    private String description;
+    private String backgroundImage;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -40,7 +42,6 @@ public class Project implements Serializable {
 
     @OneToMany(mappedBy = "project")
     private Set<Sprint> sprints = new HashSet<>();
-
 
 
     public Project(Long id, String title, String description, User user, Instant create_At) {

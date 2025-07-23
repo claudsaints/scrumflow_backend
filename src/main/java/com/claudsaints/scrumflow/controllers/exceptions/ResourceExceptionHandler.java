@@ -13,18 +13,19 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class ResourceExceptionHandler {
     @ExceptionHandler(ObjectNotFound.class)
-    public ResponseEntity<Object> applicationException(ObjectNotFound e, WebRequest request){
+    public ResponseEntity<Object> applicationException(ObjectNotFound e, WebRequest request) {
         var resp = StandardError.builder()
                 .error(e.getMessage())
-                .timestamp( new Date())
+                .timestamp(new Date())
                 .path(request.getDescription(false))
                 .status(HttpStatus.BAD_REQUEST.value())
                 .build();
 
-        return new ResponseEntity<>(resp,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(TokenInvalid.class)
-    public ResponseEntity<Object> jwtException(TokenInvalid e, WebRequest request){
+    public ResponseEntity<Object> jwtException(TokenInvalid e, WebRequest request) {
         var resp = StandardError.builder()
                 .error(e.getMessage())
                 .path(request.getDescription(false))
@@ -34,8 +35,9 @@ public class ResourceExceptionHandler {
         return new ResponseEntity<>(resp, HttpStatus.NON_AUTHORITATIVE_INFORMATION);
 
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> methodArgumentNotValidException(MethodArgumentNotValidException e, WebRequest request){
+    public ResponseEntity<Object> methodArgumentNotValidException(MethodArgumentNotValidException e, WebRequest request) {
         String errors = e.getFieldErrors().stream()
                 .map(item -> item.getField() + ": " + item.getDefaultMessage())
                 .collect(Collectors.joining(", "));

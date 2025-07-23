@@ -13,11 +13,15 @@ import java.util.Objects;
 @Entity
 @Table(name = "tb_user")
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"name","email","password"})
-@Getter @Setter
+@EqualsAndHashCode(exclude = {"name", "email", "password"})
+@Getter
+@Setter
 public class User implements Serializable {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
-    @Column(unique = true) private String email;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(unique = true)
+    private String email;
     private String name;
 
     private String password;
@@ -27,9 +31,9 @@ public class User implements Serializable {
     private List<Project> projects = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinTable(name="users_roles",
+    @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name="role_id"))
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
     public User(Long id, String name, String email, String password) {

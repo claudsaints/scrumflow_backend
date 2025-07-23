@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role {
@@ -18,7 +18,8 @@ public class Role {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Getter @Setter
+    @Getter
+    @Setter
     private RoleName name;
 
 

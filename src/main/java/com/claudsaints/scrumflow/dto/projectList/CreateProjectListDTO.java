@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class CreateProjectListDTO {
     private String title;
-    private  Integer position;
+    private Integer position;
 }

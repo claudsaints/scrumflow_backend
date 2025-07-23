@@ -11,7 +11,8 @@ import lombok.Setter;
 public class CardDTO {
     private String title;
     private String description;
-    public CardDTO(Card obj){
+
+    public CardDTO(Card obj) {
         this.title = obj.getTitle();
     }
 }
