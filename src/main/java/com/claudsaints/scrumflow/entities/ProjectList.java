@@ -33,7 +33,7 @@ public class ProjectList implements Serializable {
     @Setter
     private Instant create_at;
 
-    @OneToMany(mappedBy = "list")
+    @OneToMany(mappedBy = "list",  cascade = CascadeType.ALL, orphanRemoval = true)
     Set<Card> cardList = new HashSet<>();
 
     public ProjectList(Long id, Section section, String title, Integer position, Instant create_at) {

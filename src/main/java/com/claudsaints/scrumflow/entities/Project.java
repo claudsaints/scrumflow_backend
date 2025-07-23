@@ -31,16 +31,16 @@ public class Project implements Serializable {
 
     private Instant create_At;
 
-    @OneToMany(mappedBy = "id.project")
+    @OneToMany(mappedBy = "id.project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectMembers> members = new HashSet<>();
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Section> sections = new HashSet<>();
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",  cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Label> labels = new HashSet<>();
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",  cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Sprint> sprints = new HashSet<>();
 
 

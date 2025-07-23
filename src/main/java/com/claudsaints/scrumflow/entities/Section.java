@@ -24,7 +24,7 @@ public class Section {
     private String title;
     private String description;
 
-    @OneToMany(mappedBy = "section")
+    @OneToMany(mappedBy = "section",  cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectList> lists = new HashSet<>();
 
     @ManyToOne
