@@ -1,7 +1,7 @@
 package com.claudsaints.scrumflow.services;
 
 import com.claudsaints.scrumflow.controllers.exceptions.ObjectNotFound;
-import com.claudsaints.scrumflow.dto.ProjectMemberDTO;
+import com.claudsaints.scrumflow.dto.projectMember.ProjectMemberDTO;
 import com.claudsaints.scrumflow.entities.ProjectMembers;
 import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.repositories.ProjectMembersRepository;
@@ -22,12 +22,12 @@ public class ProjectMembersService {
     }
 
 
-    public ProjectMembers findByID(Long id){
+    public ProjectMembers findById(Long id){
         return repository.findById(id).orElseThrow(() -> new ObjectNotFound("Não foi possível encontrar esse membro no projeto"));
     }
 
     public ProjectMemberDTO updateRole(Long id, ProjectMemberRole newRole){
-        ProjectMembers member = findByID(id);
+        ProjectMembers member = findById(id);
 
         member.setRole(newRole);
 

@@ -17,6 +17,7 @@ public class ProjectDTO {
     private Long id;
     private String title;
     private String description;
+    private String backgroundImage;
     private Instant create_at;
     private UserDTO owner;
 
@@ -28,5 +29,6 @@ public class ProjectDTO {
         this.description = obj.getDescription();
         this.create_at = obj.getCreate_At();
         this.owner = new UserDTO(obj.getOwner());
+        this.backgroundImage = obj.getBackgroundImage();
     }
 }

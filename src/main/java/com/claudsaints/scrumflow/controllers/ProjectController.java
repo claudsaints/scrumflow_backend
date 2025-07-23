@@ -5,7 +5,6 @@ import com.claudsaints.scrumflow.dto.project.ProjectDTO;
 import com.claudsaints.scrumflow.dto.project.ProjectDataDTO;
 import com.claudsaints.scrumflow.entities.Project;
 import com.claudsaints.scrumflow.services.ProjectService;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +41,27 @@ public class ProjectController {
     public ResponseEntity<List<ProjectDTO>> findMemberProjects(@RequestParam String email){
         List<ProjectDTO> obj = service.findByMemberEmail(email);
         return  new ResponseEntity<>( obj ,HttpStatus.FOUND);
+    }
+
+    @PutMapping()
+    public ResponseEntity<Project> updateProjectHeader(@RequestBody ProjectDTO projectDTO){
+        Project updatedProject = service.updateTitleAndDescription(projectDTO);
+        return new ResponseEntity<>(updatedProject,HttpStatus.OK);
+    }
+
+
+    @PutMapping(value = "/{id}/{imageUrl}")
+    public ResponseEntity<String> updateBackgroundImage(@PathVariable Long id,String imageUrl){
+        service.updateBackgroundImage(id,imageUrl);
+
+        return new ResponseEntity<>(imageUrl, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        this.service.delete(id);
+
+        return  new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

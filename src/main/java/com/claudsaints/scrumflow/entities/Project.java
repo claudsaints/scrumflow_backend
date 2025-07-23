@@ -1,9 +1,6 @@
 package com.claudsaints.scrumflow.entities;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -15,6 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Project implements Serializable {
     @Id
@@ -23,6 +21,7 @@ public class Project implements Serializable {
     private  Long id;
     private  String title;
     private  String description;
+    private  String backgroundImage;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

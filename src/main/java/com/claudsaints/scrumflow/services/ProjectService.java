@@ -8,7 +8,6 @@ import com.claudsaints.scrumflow.entities.ProjectMembers;
 import com.claudsaints.scrumflow.entities.User;
 import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.repositories.ProjectRepository;
-import org.hibernate.query.QueryTypeMismatchException;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -51,18 +50,15 @@ public class ProjectService {
 
     public List<ProjectDTO> findByMemberEmail(String email){
         try{
-
              List<Project> projects = repository.findByMembersIdUserEmail(email);
 
              List<ProjectDTO>  projectDTOList  = new ArrayList<>(projects.stream().map(p -> new ProjectDTO(p)).toList());
 
              return projectDTOList;
 
-        }catch (QueryTypeMismatchException e){
+        }catch (RuntimeException e){
             throw e;
         }
-
-
     }
 
     public ProjectDataDTO findById(Long id){
@@ -74,12 +70,22 @@ public class ProjectService {
                 .orElseThrow(() -> new ObjectNotFound("Projeto não encontrado"));
     }
 
-//    public Project update(Project obj){
-//
-//    }
-//
-//    public void delete(){
-//
-//    }
+    public Project updateTitleAndDescription(ProjectDTO obj){
+       Project oldProject =  this.findEntityById(obj.getId());
 
+       oldProject.setTitle(obj.getTitle());
+       oldProject.setDescription(obj.getDescription());
+
+       return  repository.save(oldProject);
+    }
+
+    public void updateBackgroundImage(Long projectId, String imageUrl){
+        Project project = this.findEntityById(projectId);
+
+        project.setBackgroundImage(imageUrl);
+    }
+
+    public void delete(Long projectId){
+        repository.deleteById(projectId);
+    }
 }

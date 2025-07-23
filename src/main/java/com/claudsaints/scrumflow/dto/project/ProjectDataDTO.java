@@ -1,22 +1,20 @@
 package com.claudsaints.scrumflow.dto.project;
 
-import com.claudsaints.scrumflow.dto.projectList.ProjectListDTO;
-import com.claudsaints.scrumflow.dto.ProjectMemberDTO;
+import com.claudsaints.scrumflow.dto.projectMember.ProjectMemberDTO;
 import com.claudsaints.scrumflow.dto.user.UserDTO;
 import com.claudsaints.scrumflow.entities.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-//projeto_com_embedding_lista_members
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
+@Builder
 public class ProjectDataDTO {
     private Long id;
     private String title;

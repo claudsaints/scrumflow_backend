@@ -1,4 +1,4 @@
-package com.claudsaints.scrumflow.dto;
+package com.claudsaints.scrumflow.dto.projectMember;
 
 import com.claudsaints.scrumflow.dto.user.UserDTO;
 import com.claudsaints.scrumflow.entities.ProjectMembers;

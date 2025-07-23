@@ -1,6 +1,6 @@
 package com.claudsaints.scrumflow.controllers;
 
-import com.claudsaints.scrumflow.dto.ProjectMemberDTO;
+import com.claudsaints.scrumflow.dto.projectMember.ProjectMemberDTO;
 import com.claudsaints.scrumflow.entities.ProjectMembers;
 import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.services.ProjectMembersService;
