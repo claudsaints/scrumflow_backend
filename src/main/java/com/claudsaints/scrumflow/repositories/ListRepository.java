@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface ListRepository extends JpaRepository<ProjectList, Long> {
     List<ProjectList> findAllBySectionId(Long sectionId);
 
-    Optional<ProjectList> findBySectionIdTopByOrderByPosicaoDesc(Long sectionId);
+    Optional<ProjectList> findTopBySectionIdOrderByPositionDesc(Long sectionId);
 }

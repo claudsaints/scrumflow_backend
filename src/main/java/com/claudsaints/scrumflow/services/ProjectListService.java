@@ -36,37 +36,31 @@ public class ProjectListService {
 
         Section section = sectionService.findById(sectionId);
 
-        int newPosition = repository.findBySectionIdTopByOrderByPosicaoDesc(sectionId).map( l -> l.getPosition() + 1 ).orElse(0);
+        int newPosition = repository.findTopBySectionIdOrderByPositionDesc(sectionId).map( l -> l.getPosition() + 1 ).orElse(0);
 
         ProjectList list1 = new ProjectList(null, section, list.getTitle(), newPosition, Instant.now());
 
         return repository.save(list1);
     }
 
-    public ProjectList updatePosition(Long listId, Long projectId, int newPos) {
+    public ProjectList updatePosition(Long listId, Long sectionId, int newPos) {
         ProjectList targetList = this.findById(listId);
 
-        List<ProjectList> allLists = this.findAll(projectId);
+        Section section = sectionService.findById(sectionId);
 
-        Optional<ProjectList> listAlreadyExist = allLists.stream().filter(e -> e.getPosition() == newPos).findFirst();
+        Optional<ProjectList> listAlreadyExist = section.getLists().stream()
+                .filter(e -> e.getPosition() == newPos).findFirst();
 
-        if (listAlreadyExist.isEmpty()) {
-            targetList.setPosition(newPos);
-            return repository.save(targetList);
-        } else {
+        if (!listAlreadyExist.isEmpty()) {
             listAlreadyExist.get().setPosition(targetList.getPosition());
             targetList.setPosition(newPos);
             repository.saveAll(Arrays.asList(listAlreadyExist.get(), targetList));
             return targetList;
-
         }
-    }
 
+        targetList.setPosition(newPos);
+        return repository.save(targetList);
 
-    public List<ProjectList> findAll(Long id) {
-        return repository.findAllBySectionId(id).stream()
-                .sorted(Comparator.comparingInt(ProjectList::getPosition))
-                .toList();
     }
 
 

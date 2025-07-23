@@ -7,6 +7,8 @@ import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.repositories.ProjectMembersRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProjectMembersService {
 
@@ -24,6 +26,10 @@ public class ProjectMembersService {
 
     public ProjectMembers findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new ObjectNotFound("Não foi possível encontrar esse membro no projeto"));
+    }
+
+    public List<ProjectMembers> findAllByProjectId(Long projectId){
+        return  repository.findAllByIdProjectId(projectId);
     }
 
     public ProjectMemberDTO updateRole(Long id, ProjectMemberRole newRole) {

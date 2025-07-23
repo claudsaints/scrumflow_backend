@@ -28,7 +28,7 @@ public class ProjectController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProjectDataDTO> findById(@PathVariable Long id) {
         ProjectDataDTO obj = service.findById(id);
-        return new ResponseEntity<>(obj, HttpStatus.FOUND);
+        return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
     @GetMapping
@@ -40,7 +40,7 @@ public class ProjectController {
     @GetMapping(value = "/member/")
     public ResponseEntity<List<ProjectDTO>> findMemberProjects(@RequestParam String email) {
         List<ProjectDTO> obj = service.findByMemberEmail(email);
-        return new ResponseEntity<>(obj, HttpStatus.FOUND);
+        return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
     @PutMapping()

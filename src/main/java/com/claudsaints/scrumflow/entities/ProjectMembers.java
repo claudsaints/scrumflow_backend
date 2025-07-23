@@ -15,7 +15,6 @@ import java.time.Instant;
 @Table(name = "tb_project_members")
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class ProjectMembers implements Serializable {
     @EmbeddedId
     private ProjectMembersPk id = new ProjectMembersPk();

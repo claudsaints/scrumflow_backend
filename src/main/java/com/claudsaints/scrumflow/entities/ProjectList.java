@@ -12,11 +12,12 @@ import java.util.Set;
 @Entity
 @Table(name = "tb_project_list")
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"title", "position", "create_at"})
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 public class ProjectList implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include()
     private Long id;
 
     @ManyToOne
