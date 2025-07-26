@@ -5,13 +5,11 @@ import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.entities.enums.RoleName;
 import com.claudsaints.scrumflow.repositories.*;
 import com.claudsaints.scrumflow.security.config.SecurityConfiguration;
-import com.sun.tools.jconsole.JConsoleContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Arrays;
 
@@ -53,7 +51,7 @@ public class Config implements CommandLineRunner {
 
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) throws RuntimeException {
 
         Role adm = new Role(null, RoleName.ROLE_ADMINISTRATOR);
         Role simple = new Role(null, RoleName.ROLE_CUSTOMER);

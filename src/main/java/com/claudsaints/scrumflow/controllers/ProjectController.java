@@ -31,13 +31,7 @@ public class ProjectController {
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<List<ProjectDataDTO>> findAll() {
-        List<ProjectDataDTO> obj = service.findAll();
-        return new ResponseEntity<>(obj, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/member/")
+    @GetMapping()
     public ResponseEntity<List<ProjectDTO>> findMemberProjects(@RequestParam String email) {
         List<ProjectDTO> obj = service.findByMemberEmail(email);
         return new ResponseEntity<>(obj, HttpStatus.OK);

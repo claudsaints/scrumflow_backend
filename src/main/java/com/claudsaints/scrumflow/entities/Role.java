@@ -11,6 +11,8 @@ import lombok.Setter;
 @Table(name = "roles")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

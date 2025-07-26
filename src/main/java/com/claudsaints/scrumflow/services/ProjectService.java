@@ -45,10 +45,6 @@ public class ProjectService {
 
     }
 
-    public List<ProjectDataDTO> findAll() {
-        return repository.findAll().stream().map(ProjectDataDTO::new).toList();
-    }
-
     public List<ProjectDTO> findByMemberEmail(String email) {
         try {
             List<Project> projects = repository.findByMembersIdUserEmail(email);

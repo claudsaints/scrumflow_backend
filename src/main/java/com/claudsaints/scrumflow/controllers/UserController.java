@@ -1,8 +1,9 @@
 package com.claudsaints.scrumflow.controllers;
 
+import com.claudsaints.scrumflow.dto.auth.RecoveryDataLogin;
 import com.claudsaints.scrumflow.dto.user.CreateUserDTO;
 import com.claudsaints.scrumflow.dto.user.LoginUserDTO;
-import com.claudsaints.scrumflow.dto.RecoveryJwtDTO;
+import com.claudsaints.scrumflow.dto.auth.RecoveryUserDTO;
 import com.claudsaints.scrumflow.entities.User;
 import com.claudsaints.scrumflow.services.UserService;
 import jakarta.validation.Valid;
@@ -20,9 +21,9 @@ class UserController {
     private UserService service;
 
     @PostMapping("/login")
-    public ResponseEntity<RecoveryJwtDTO> authenticateUser(@RequestBody LoginUserDTO loginUserDto) {
-        RecoveryJwtDTO token = service.read(loginUserDto);
-        return new ResponseEntity<>(token, HttpStatus.OK);
+    public ResponseEntity<RecoveryDataLogin> authenticateUser(@RequestBody LoginUserDTO loginUserDto) {
+        RecoveryDataLogin data = service.read(loginUserDto);
+        return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
     @PostMapping
