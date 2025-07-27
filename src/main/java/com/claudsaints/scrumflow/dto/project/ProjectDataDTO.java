@@ -1,6 +1,7 @@
 package com.claudsaints.scrumflow.dto.project;
 
 import com.claudsaints.scrumflow.dto.projectMember.ProjectMemberDTO;
+import com.claudsaints.scrumflow.dto.section.SectionSimpleData;
 import com.claudsaints.scrumflow.dto.user.UserDTO;
 import com.claudsaints.scrumflow.entities.*;
 import lombok.*;
@@ -24,11 +25,11 @@ public class ProjectDataDTO {
 
     private Set<ProjectMemberDTO> members = new HashSet<>();
 
-    private Set<Section> sections = new HashSet<>();
-
     private Set<Label> labels = new HashSet<>();
 
-    private Set<Sprint> sprints = new HashSet<>();
+    private Set<SectionSimpleData> sections = new HashSet<>();
+
+    private Set<Long> sprints_ids = new HashSet<>();
 
     public ProjectDataDTO(Project obj) {
         this.id = obj.getId();
@@ -39,7 +40,9 @@ public class ProjectDataDTO {
 
         obj.getMembers().forEach(m -> members.add(new ProjectMemberDTO(m)));
 
-        obj.getSections().forEach(s -> this.sections.add(s));
+        obj.getSections().forEach(s -> this.sections.add( new SectionSimpleData(s.getId(), s.getTitle(), s.getDescription())));
+
+        obj.getSprints().forEach( s -> this.sprints_ids.add(s.getId()));
 
     }
 }
