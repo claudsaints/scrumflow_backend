@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SectionService {
@@ -19,12 +20,12 @@ public class SectionService {
     private ProjectService projectService;
 
 
-    public Section create(CreateSectionDTO sectionDTO, Long projectId) {
+    public Section create(CreateSectionDTO sectionDTO, UUID projectId) {
 
         Section newSection = Section.builder()
                 .title(sectionDTO.title())
                 .description(sectionDTO.description())
-                .project(projectService.findEntityById(projectId))
+                .project(projectService.findEntityByUuid(projectId))
                 .build();
 
         return repository.save(newSection);
@@ -34,12 +35,16 @@ public class SectionService {
         return repository.findById(id).orElseThrow(() -> new ObjectNotFound("Section Not Found"));
     }
 
-    public List<Section> findAll(Long projectId) {
-        return repository.findAllByProjectId(projectId);
+    public Section findByUuid(UUID id) {
+        return repository.findByUuid(id).orElseThrow(() -> new ObjectNotFound("Section Not Found"));
     }
 
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public List<Section> findAll(UUID projectId) {
+        return repository.findAllByProjectUuid(projectId);
+    }
+
+    public void delete(UUID id) {
+        repository.deleteByUuid(id);
     }
 
 

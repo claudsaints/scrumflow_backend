@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/project/sections")
@@ -17,21 +18,21 @@ public class SectionController {
     private SectionService service;
 
     @PostMapping(value = "/{projectId}")
-    public ResponseEntity<Section> create(@RequestBody CreateSectionDTO sectionDTO, @PathVariable Long projectId){
+    public ResponseEntity<Section> create(@RequestBody CreateSectionDTO sectionDTO, @PathVariable UUID projectId){
         var section = service.create(sectionDTO,projectId);
 
         return new ResponseEntity<>(section,HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Section> findById(@PathVariable Long id){
-        Section section = service.findById(id);
+    public ResponseEntity<Section> findById(@PathVariable UUID id){
+        Section section = service.findByUuid(id);
 
         return new ResponseEntity<>(section, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Section>> findAllByProject(@RequestParam Long projectId){
+    public ResponseEntity<List<Section>> findAllByProject(@RequestParam UUID projectId){
        List<Section> sections =  service.findAll(projectId);
 
        return new ResponseEntity<>(sections, HttpStatus.OK);
@@ -39,7 +40,7 @@ public class SectionController {
 
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable UUID id){
         service.delete(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
