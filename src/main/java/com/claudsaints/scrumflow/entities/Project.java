@@ -22,10 +22,15 @@ public class Project implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include()
     private Long id;
-    private String title;
-    private String description;
-    private String backgroundImage;
 
+    @Column(unique = true, nullable = false, updatable = false)
+    private UUID uuid = UUID.randomUUID();
+
+    private String title;
+
+    private String description;
+
+    private String backgroundImage;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

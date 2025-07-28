@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/project")
@@ -26,8 +27,8 @@ public class ProjectController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ProjectDataDTO> findById(@PathVariable Long id) {
-        ProjectDataDTO obj = service.findById(id);
+    public ResponseEntity<ProjectDataDTO> findById(@PathVariable UUID id) {
+        ProjectDataDTO obj = service.findByUuid(id);
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
@@ -45,15 +46,15 @@ public class ProjectController {
 
 
     @PutMapping(value = "/{id}/{imageUrl}")
-    public ResponseEntity<String> updateBackgroundImage(@PathVariable Long id, String imageUrl) {
+    public ResponseEntity<String> updateBackgroundImage(@PathVariable UUID id, String imageUrl) {
         service.updateBackgroundImage(id, imageUrl);
 
         return new ResponseEntity<>(imageUrl, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.service.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        this.service.deleteByUuid(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.UUID;
 
 //projeto_padrão_sem_embedding
 
@@ -14,7 +15,7 @@ import java.time.Instant;
 @Getter
 @Setter
 public class ProjectDTO {
-    private Long id;
+    private UUID id;
     private String title;
     private String description;
     private String backgroundImage;
@@ -23,7 +24,7 @@ public class ProjectDTO {
 
 
     public ProjectDTO(Project obj) {
-        this.id = obj.getId();
+        this.id = obj.getUuid();
         this.title = obj.getTitle();
         this.description = obj.getDescription();
         this.create_at = obj.getCreate_At();

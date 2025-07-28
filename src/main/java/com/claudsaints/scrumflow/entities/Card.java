@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import java.util.UUID;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -24,10 +24,15 @@ public class Card implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
+
+    @Column(unique = true, nullable = false, updatable = false)
+    private UUID uuid = UUID.randomUUID();
+
     @ManyToOne
     @JoinColumn(name = "project_list_id")
     @JsonIgnore
     private ProjectList list;
+
     private String title;
     private String description;
     private Instant start_at;

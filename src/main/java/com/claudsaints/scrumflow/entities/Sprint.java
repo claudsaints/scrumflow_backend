@@ -6,10 +6,12 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_sprints")
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Getter
 @Setter
@@ -20,6 +22,9 @@ public class Sprint implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Column(unique = true, nullable = false, updatable = false)
+    private UUID uuid = UUID.randomUUID();
+
     @ManyToOne
     @JoinColumn(name = "project_id")
     @JsonIgnore
@@ -29,8 +34,11 @@ public class Sprint implements Serializable {
     private  Section section;
 
     private String title;
+
     private Instant start_date;
+
     private Instant end_date;
+
     private String goal;
 
     public Sprint(Long id, Project project, Section section, String title, Instant start_date, Instant end_date, String goal) {

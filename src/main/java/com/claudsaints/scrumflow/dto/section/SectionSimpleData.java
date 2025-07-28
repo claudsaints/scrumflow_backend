@@ -1,4 +1,6 @@
 package com.claudsaints.scrumflow.dto.section;
 
-public record SectionSimpleData(Long id, String title, String description) {
+import java.util.UUID;
+
+public record SectionSimpleData(UUID id, String title, String description) {
 }

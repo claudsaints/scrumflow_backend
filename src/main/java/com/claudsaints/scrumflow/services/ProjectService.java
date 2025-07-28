@@ -8,11 +8,14 @@ import com.claudsaints.scrumflow.entities.ProjectMembers;
 import com.claudsaints.scrumflow.entities.User;
 import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.repositories.ProjectRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.security.PublicKey;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProjectService {
@@ -62,13 +65,20 @@ public class ProjectService {
         return new ProjectDataDTO(this.findEntityById(id));
     }
 
+    public ProjectDataDTO findByUuid(UUID id) {return new ProjectDataDTO(this.findEntityByUuid(id));}
+
+
+    public Project findEntityByUuid(UUID id){
+        return repository.findByUuid(id).orElseThrow(() -> new EntityNotFoundException("Project not found"));
+    }
+
     public Project findEntityById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ObjectNotFound("Projeto não encontrado"));
+                .orElseThrow(() -> new ObjectNotFound("Project not found"));
     }
 
     public Project updateTitleAndDescription(ProjectDTO obj) {
-        Project oldProject = this.findEntityById(obj.getId());
+        Project oldProject = this.findEntityByUuid(obj.getId());
 
         oldProject.setTitle(obj.getTitle());
         oldProject.setDescription(obj.getDescription());
@@ -76,12 +86,16 @@ public class ProjectService {
         return repository.save(oldProject);
     }
 
-    public void updateBackgroundImage(Long projectId, String imageUrl) {
-        Project project = this.findEntityById(projectId);
+    public void updateBackgroundImage(UUID projectId, String imageUrl) {
+        Project project = this.findEntityByUuid(projectId);
 
         project.setBackgroundImage(imageUrl);
     }
 
+    public void deleteByUuid(UUID id){
+        repository.deleteByUuid(id);
+
+    }
     public void delete(Long projectId) {
         repository.deleteById(projectId);
     }

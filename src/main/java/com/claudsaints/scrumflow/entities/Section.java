@@ -21,7 +21,13 @@ public class Section implements Comparable<Section>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include()
     private Long id;
+
+
+    @Column(unique = true, nullable = false, updatable = false)
+    private UUID uuid = UUID.randomUUID();
+
     private String title;
+
     private String description;
 
     @OneToMany(mappedBy = "section",  cascade = CascadeType.ALL, orphanRemoval = true)

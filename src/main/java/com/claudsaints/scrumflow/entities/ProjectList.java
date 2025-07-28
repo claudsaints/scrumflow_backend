@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_project_list")
@@ -21,11 +22,14 @@ public class ProjectList implements Serializable, Comparable<ProjectList>{
     @EqualsAndHashCode.Include()
     private Long id;
 
+
+    @Column(unique = true, nullable = false, updatable = false)
+    private UUID uuid = UUID.randomUUID();
+
     @ManyToOne
     @JoinColumn(name = "section_id")
     @JsonIgnore
     private Section section;
-
 
     @Setter
     private String title;
