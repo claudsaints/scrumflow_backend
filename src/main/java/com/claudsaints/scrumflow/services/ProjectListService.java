@@ -63,6 +63,14 @@ public class ProjectListService {
 
     }
 
+    public ProjectList updateTitle(Long listId, String title){
+        ProjectList projectList = findById(listId);
+
+        projectList.setTitle(title);
+
+        return repository.save(projectList);
+    }
+
 
     public ProjectList findById(Long id) {
         return repository.findById(id)

@@ -4,9 +4,9 @@ package com.claudsaints.scrumflow.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_section")
@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Section {
+public class Section implements Comparable<Section>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include()
@@ -25,7 +25,7 @@ public class Section {
     private String description;
 
     @OneToMany(mappedBy = "section",  cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ProjectList> lists = new HashSet<>();
+    private Set<ProjectList> lists = new TreeSet<>();
 
     @ManyToOne
     @JoinColumn(name = "project_id")
@@ -40,4 +40,8 @@ public class Section {
     }
 
 
+    @Override
+    public int compareTo(@NotNull Section o) {
+        return o.getId().compareTo(this.id);
+    }
 }

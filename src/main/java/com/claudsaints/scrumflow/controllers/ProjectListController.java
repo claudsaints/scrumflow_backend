@@ -28,9 +28,17 @@ public class ProjectListController {
     }
 
     @PutMapping
-    public ResponseEntity<ProjectList> update(@RequestParam Long sectionId, Long listId, int newPos) {
+    public ResponseEntity<ProjectList> updatePosition(@RequestParam Long sectionId, Long listId, int newPos) {
 
         ProjectList list = service.updatePosition( listId,sectionId, newPos);
+
+        return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping( value = "/{id}")
+    public ResponseEntity<ProjectList> updateTitle(@PathVariable Long listId, @RequestBody String title) {
+
+        ProjectList list = service.updateTitle( listId, title);
 
         return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
     }

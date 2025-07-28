@@ -3,6 +3,7 @@ package com.claudsaints.scrumflow.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -14,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
-public class ProjectList implements Serializable {
+public class ProjectList implements Serializable, Comparable<ProjectList>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include()
@@ -42,5 +43,10 @@ public class ProjectList implements Serializable {
         this.title = title;
         this.position = position;
         this.create_at = create_at;
+    }
+
+    @Override
+    public int compareTo(@NotNull ProjectList o) {
+        return Integer.compare(o.position,this.position);
     }
 }

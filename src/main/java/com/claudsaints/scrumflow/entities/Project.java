@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_project")
@@ -24,6 +25,7 @@ public class Project implements Serializable {
     private String title;
     private String description;
     private String backgroundImage;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")

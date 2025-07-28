@@ -69,6 +69,8 @@ public class Config implements CommandLineRunner {
         Project p1 = new Project(null, "scrumflow", "a scrum + kanban app", u1, Instant.now());
         Project p2 = new Project(null, "virtual_shop", "virtual website to buy things", u1, Instant.now());
 
+        p1.setBackgroundImage("https://images.photowall.com/products/73017/tokyo-night-view.jpg?h=699&q=85");
+
         projectRepository.saveAll(Arrays.asList(p2, p1));
         ProjectMembers pm0 = new ProjectMembers(u1, p1, ProjectMemberRole.MEMBER, Instant.now());
         ProjectMembers pm1 = new ProjectMembers(u2, p1, ProjectMemberRole.OWNER, Instant.now());
