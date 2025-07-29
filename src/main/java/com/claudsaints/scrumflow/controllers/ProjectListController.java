@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
@@ -19,16 +20,16 @@ public class ProjectListController {
     @Autowired
     private ProjectListService service;
 
-
+    //todo
     @PostMapping("/{sectionId}")
-    public ResponseEntity<ProjectList> create(@RequestBody CreateProjectListDTO listDTO, @PathVariable Long sectionId) {
+    public ResponseEntity<ProjectList> create(@RequestBody CreateProjectListDTO listDTO, @PathVariable UUID sectionId) {
         ProjectList list = service.createList(sectionId, listDTO);
 
         return new ResponseEntity<>(list, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<ProjectList> updatePosition(@RequestParam Long sectionId, Long listId, int newPos) {
+    public ResponseEntity<ProjectList> updatePosition(@RequestParam UUID sectionId, UUID listId, int newPos) {
 
         ProjectList list = service.updatePosition( listId,sectionId, newPos);
 
@@ -36,7 +37,7 @@ public class ProjectListController {
     }
 
     @PutMapping( value = "/{id}")
-    public ResponseEntity<ProjectList> updateTitle(@PathVariable Long listId, @RequestBody String title) {
+    public ResponseEntity<ProjectList> updateTitle(@PathVariable UUID listId, @RequestBody String title) {
 
         ProjectList list = service.updateTitle( listId, title);
 
@@ -44,7 +45,7 @@ public class ProjectListController {
     }
 
     @DeleteMapping( value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id ){
+    public ResponseEntity<Void> delete(@PathVariable UUID id ){
         service.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.OK);

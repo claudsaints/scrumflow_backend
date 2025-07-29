@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProjectListService {
@@ -32,21 +29,21 @@ public class ProjectListService {
     }
 
 
-    public ProjectList createList(Long sectionId, CreateProjectListDTO list) {
+    public ProjectList createList(UUID sectionId, CreateProjectListDTO list) {
 
-        Section section = sectionService.findById(sectionId);
+        Section section = sectionService.findByUuid(sectionId);
 
-        int newPosition = repository.findTopBySectionIdOrderByPositionDesc(sectionId).map( l -> l.getPosition() + 1 ).orElse(0);
+        int newPosition = repository.findTopBySectionUuidOrderByPositionDesc(sectionId).map( l -> l.getPosition() + 1 ).orElse(0);
 
         ProjectList list1 = new ProjectList(null, section, list.getTitle(), newPosition, Instant.now());
 
         return repository.save(list1);
     }
 
-    public ProjectList updatePosition(Long listId, Long sectionId, int newPos) {
-        ProjectList targetList = this.findById(listId);
+    public ProjectList updatePosition(UUID listId, UUID sectionId, int newPos) {
+        ProjectList targetList = this.findByUuid(listId);
 
-        Section section = sectionService.findById(sectionId);
+        Section section = sectionService.findByUuid(sectionId);
 
         Optional<ProjectList> listAlreadyExist = section.getLists().stream()
                 .filter(e -> e.getPosition() == newPos).findFirst();
@@ -63,8 +60,8 @@ public class ProjectListService {
 
     }
 
-    public ProjectList updateTitle(Long listId, String title){
-        ProjectList projectList = findById(listId);
+    public ProjectList updateTitle(UUID listId, String title){
+        ProjectList projectList = findByUuid(listId);
 
         projectList.setTitle(title);
 
@@ -77,8 +74,13 @@ public class ProjectListService {
                 .orElseThrow(() -> new ObjectNotFound("List not found"));
     }
 
-    public void deleteById(Long listId){
-        repository.deleteById(listId);
+    public ProjectList findByUuid(UUID id){
+        return repository.findByUuid(id)
+                .orElseThrow(() -> new EntityNotFoundException("List not found"));
+
+    }
+    public void deleteById(UUID listId){
+        repository.deleteByUuid(listId);
     }
 
 
