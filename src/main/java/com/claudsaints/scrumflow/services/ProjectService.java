@@ -8,10 +8,7 @@ import com.claudsaints.scrumflow.entities.ProjectMembers;
 import com.claudsaints.scrumflow.entities.User;
 import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.repositories.ProjectRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.security.PublicKey;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +66,7 @@ public class ProjectService {
 
 
     public Project findEntityByUuid(UUID id){
-        return repository.findByUuid(id).orElseThrow(() -> new EntityNotFoundException("Project not found"));
+        return repository.findByUuid(id).orElseThrow(() -> new ObjectNotFound("Project not found"));
     }
 
     public Project findEntityById(Long id) {

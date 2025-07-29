@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SprintService {
@@ -22,11 +23,11 @@ public class SprintService {
     @Autowired
     private SectionService sectionService;
 
-    public Sprint create(Long projectId, Long sectionId, CreateSprintDTO sprintDTO){
+    public Sprint create(UUID projectId, UUID sectionId, CreateSprintDTO sprintDTO){
 
-        Project project = projectService.findEntityById(projectId);
+        Project project = projectService.findEntityByUuid(projectId);
 
-        Section section = sectionService.findById(sectionId);
+        Section section = sectionService.findByUuid(sectionId);
 
         Sprint sprint = Sprint.builder()
                 .project(project)
@@ -47,13 +48,16 @@ public class SprintService {
         return repository.findById(id).orElseThrow(() -> new ObjectNotFound("Sprint Not Found"));
     }
 
-
-    public List<Sprint> sprintsByProject(Long projectId){
-        return repository.findAllByProjectId(projectId);
+    public Sprint findByUuid(UUID uuid){
+        return repository.findByUuid(uuid).orElseThrow(() -> new ObjectNotFound("Sprint not found"));
     }
 
-    public Sprint update(Long id, CreateSprintDTO sprintDTO ){
-        Sprint sprint = this.findById(id);
+    public List<Sprint> sprintsByProject(UUID projectId){
+        return repository.findAllByProjectUuid(projectId);
+    }
+
+    public Sprint update(UUID id, CreateSprintDTO sprintDTO ){
+        Sprint sprint = this.findByUuid(id);
 
         sprint.setTitle( sprintDTO.title());
         sprint.setStart_date( sprintDTO.start());
@@ -64,7 +68,7 @@ public class SprintService {
     }
 
 
-    public void delete(Long id){
-        repository.deleteById(id);
+    public void delete(UUID uuid){
+        repository.deleteByUuid(uuid);
     }
 }
