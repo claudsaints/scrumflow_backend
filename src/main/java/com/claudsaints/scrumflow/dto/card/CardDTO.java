@@ -11,7 +11,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class CardDTO {
-    private UUID id;
+    private UUID uuid;
     private String title;
     private String description;
 
@@ -19,6 +19,6 @@ public class CardDTO {
 
         this.title = obj.getTitle();
         this.description = obj.getDescription();
-        this.id = obj.getUuid();
+        this.uuid = obj.getUuid();
     }
 }

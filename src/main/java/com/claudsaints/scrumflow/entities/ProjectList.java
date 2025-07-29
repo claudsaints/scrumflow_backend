@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
-public class ProjectList implements Serializable, Comparable<ProjectList>{
+public class ProjectList implements Serializable, Comparable<ProjectList> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include()
@@ -38,7 +38,7 @@ public class ProjectList implements Serializable, Comparable<ProjectList>{
     @Setter
     private Instant create_at;
 
-    @OneToMany(mappedBy = "list",  cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "list", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<Card> cardList = new HashSet<>();
 
     public ProjectList(Long id, Section section, String title, Integer position, Instant create_at) {
@@ -51,6 +51,6 @@ public class ProjectList implements Serializable, Comparable<ProjectList>{
 
     @Override
     public int compareTo(@NotNull ProjectList o) {
-        return Integer.compare(o.position,this.position);
+        return Integer.compare(o.position, this.position);
     }
 }

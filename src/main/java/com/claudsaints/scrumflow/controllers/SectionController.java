@@ -1,4 +1,5 @@
 package com.claudsaints.scrumflow.controllers;
+
 import com.claudsaints.scrumflow.dto.section.CreateSectionDTO;
 import com.claudsaints.scrumflow.entities.Section;
 import com.claudsaints.scrumflow.services.SectionService;
@@ -18,29 +19,29 @@ public class SectionController {
     private SectionService service;
 
     @PostMapping(value = "/{projectId}")
-    public ResponseEntity<Section> create(@RequestBody CreateSectionDTO sectionDTO, @PathVariable UUID projectId){
-        var section = service.create(sectionDTO,projectId);
+    public ResponseEntity<Section> create(@RequestBody CreateSectionDTO sectionDTO, @PathVariable UUID projectId) {
+        var section = service.create(sectionDTO, projectId);
 
-        return new ResponseEntity<>(section,HttpStatus.OK);
+        return new ResponseEntity<>(section, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Section> findById(@PathVariable UUID id){
+    public ResponseEntity<Section> findById(@PathVariable UUID id) {
         Section section = service.findByUuid(id);
 
         return new ResponseEntity<>(section, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Section>> findAllByProject(@RequestParam UUID projectId){
-       List<Section> sections =  service.findAll(projectId);
+    public ResponseEntity<List<Section>> findAllByProject(@RequestParam UUID projectId) {
+        List<Section> sections = service.findAll(projectId);
 
-       return new ResponseEntity<>(sections, HttpStatus.OK);
+        return new ResponseEntity<>(sections, HttpStatus.OK);
     }
 
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id){
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
 
         return new ResponseEntity<>(HttpStatus.OK);

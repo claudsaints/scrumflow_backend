@@ -59,7 +59,7 @@ public class ProjectCardController {
     ) {
         service.delete(cardId);
 
-        return new ResponseEntity<>( HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

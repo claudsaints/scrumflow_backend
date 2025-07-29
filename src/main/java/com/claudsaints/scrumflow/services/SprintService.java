@@ -6,6 +6,7 @@ import com.claudsaints.scrumflow.entities.Project;
 import com.claudsaints.scrumflow.entities.Section;
 import com.claudsaints.scrumflow.entities.Sprint;
 import com.claudsaints.scrumflow.repositories.SprintRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class SprintService {
     @Autowired
     private SectionService sectionService;
 
-    public Sprint create(UUID projectId, UUID sectionId, CreateSprintDTO sprintDTO){
+    public Sprint create(UUID projectId, UUID sectionId, CreateSprintDTO sprintDTO) {
 
         Project project = projectService.findEntityByUuid(projectId);
 
@@ -42,33 +43,28 @@ public class SprintService {
 
     }
 
-
-
-    public Sprint findById(Long id){
-        return repository.findById(id).orElseThrow(() -> new ObjectNotFound("Sprint Not Found"));
-    }
-
-    public Sprint findByUuid(UUID uuid){
+    public Sprint findByUuid(UUID uuid) {
         return repository.findByUuid(uuid).orElseThrow(() -> new ObjectNotFound("Sprint not found"));
     }
 
-    public List<Sprint> sprintsByProject(UUID projectId){
+    public List<Sprint> sprintsByProject(UUID projectId) {
         return repository.findAllByProjectUuid(projectId);
     }
 
-    public Sprint update(UUID id, CreateSprintDTO sprintDTO ){
+    @Transactional
+    public Sprint update(UUID id, CreateSprintDTO sprintDTO) {
         Sprint sprint = this.findByUuid(id);
 
-        sprint.setTitle( sprintDTO.title());
-        sprint.setStart_date( sprintDTO.start());
-        sprint.setEnd_date( sprintDTO.end());
-        sprint.setGoal( sprintDTO.goal());
+        sprint.setTitle(sprintDTO.title());
+        sprint.setStart_date(sprintDTO.start());
+        sprint.setEnd_date(sprintDTO.end());
+        sprint.setGoal(sprintDTO.goal());
 
         return repository.save(sprint);
     }
 
-
-    public void delete(UUID uuid){
+    @Transactional
+    public void delete(UUID uuid) {
         repository.deleteByUuid(uuid);
     }
 }

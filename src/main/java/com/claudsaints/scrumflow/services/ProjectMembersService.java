@@ -5,6 +5,7 @@ import com.claudsaints.scrumflow.dto.projectMember.ProjectMemberDTO;
 import com.claudsaints.scrumflow.entities.ProjectMembers;
 import com.claudsaints.scrumflow.entities.enums.ProjectMemberRole;
 import com.claudsaints.scrumflow.repositories.ProjectMembersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,12 +13,9 @@ import java.util.List;
 @Service
 public class ProjectMembersService {
 
+    @Autowired
+    private ProjectMembersRepository repository;
 
-    private final ProjectMembersRepository repository;
-
-    public ProjectMembersService(ProjectMembersRepository repository) {
-        this.repository = repository;
-    }
 
     public ProjectMembers addMember(ProjectMembers member) {
         return repository.save(member);
@@ -25,11 +23,11 @@ public class ProjectMembersService {
 
 
     public ProjectMembers findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new ObjectNotFound("Não foi possível encontrar esse membro no projeto"));
+        return repository.findById(id).orElseThrow(() -> new ObjectNotFound("Project Member not found"));
     }
 
-    public List<ProjectMembers> findAllByProjectId(Long projectId){
-        return  repository.findAllByIdProjectId(projectId);
+    public List<ProjectMembers> findAllByProjectId(Long projectId) {
+        return repository.findAllByIdProjectId(projectId);
     }
 
     public ProjectMemberDTO updateRole(Long id, ProjectMemberRole newRole) {

@@ -10,5 +10,6 @@ import java.util.UUID;
 
 public interface UuidRepository<T> {
     Optional<T> findByUuid(UUID uuid);
+
     void deleteByUuid(UUID uuid);
 }

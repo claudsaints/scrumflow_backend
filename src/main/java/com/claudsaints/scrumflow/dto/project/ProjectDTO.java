@@ -15,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class ProjectDTO {
-    private UUID id;
+    private UUID uuid;
     private String title;
     private String description;
     private String backgroundImage;
@@ -24,7 +24,7 @@ public class ProjectDTO {
 
 
     public ProjectDTO(Project obj) {
-        this.id = obj.getUuid();
+        this.uuid = obj.getUuid();
         this.title = obj.getTitle();
         this.description = obj.getDescription();
         this.create_at = obj.getCreate_At();

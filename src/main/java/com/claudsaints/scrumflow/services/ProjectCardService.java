@@ -7,6 +7,8 @@ import com.claudsaints.scrumflow.entities.Card;
 import com.claudsaints.scrumflow.entities.Label;
 import com.claudsaints.scrumflow.repositories.CardRepository;
 import com.claudsaints.scrumflow.repositories.LabelRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -16,15 +18,13 @@ import java.util.UUID;
 @Service
 public class ProjectCardService {
 
-    private final CardRepository repository;
-    private final LabelRepository labelRepository;
-    private final ProjectListService projectListService;
+    @Autowired
+    private CardRepository repository;
+    @Autowired
+    private LabelRepository labelRepository;
+    @Autowired
+    private ProjectListService projectListService;
 
-    public ProjectCardService(CardRepository repository, LabelRepository labelRepository, ProjectListService projectListService) {
-        this.repository = repository;
-        this.labelRepository = labelRepository;
-        this.projectListService = projectListService;
-    }
 
     public Card createCard(UUID listId, CreateCardDTO cardDTO) {
         var list = projectListService.findByUuid(listId);
@@ -34,6 +34,7 @@ public class ProjectCardService {
         return repository.save(card);
     }
 
+    @Transactional
     public Card updateCard(UUID cardId, CardBaseDTO dto) {
         Card card = this.findByUuid(cardId);
 
@@ -58,15 +59,12 @@ public class ProjectCardService {
         return new HashSet<>(labelRepository.findAllById(labelIds));
     }
 
-    public Card findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new ObjectNotFound("Card not found"));
-    }
-
-    public Card findByUuid(UUID uuid){
+    public Card findByUuid(UUID uuid) {
         return repository.findByUuid(uuid).orElseThrow(() -> new ObjectNotFound("Card not found"));
     }
 
-    public void  delete(UUID cardId){
+    @Transactional
+    public void delete(UUID cardId) {
         repository.deleteByUuid(cardId);
     }
 }

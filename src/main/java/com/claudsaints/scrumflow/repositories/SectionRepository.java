@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-public interface SectionRepository extends JpaRepository<Section, Long>, UuidRepository<Section>{
+public interface SectionRepository extends JpaRepository<Section, Long>, UuidRepository<Section> {
     List<Section> findAllByProjectId(Long id);
 
     List<Section> findAllByProjectUuid(UUID uuid);

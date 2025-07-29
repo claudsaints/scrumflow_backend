@@ -2,7 +2,6 @@ package com.claudsaints.scrumflow.services;
 
 import com.claudsaints.scrumflow.controllers.exceptions.ObjectNotFound;
 import com.claudsaints.scrumflow.dto.auth.RecoveryDataLogin;
-import com.claudsaints.scrumflow.dto.auth.RecoveryJwtDTO;
 import com.claudsaints.scrumflow.dto.user.CreateUserDTO;
 import com.claudsaints.scrumflow.dto.user.LoginUserDTO;
 import com.claudsaints.scrumflow.dto.auth.RecoveryUserDTO;
@@ -23,19 +22,19 @@ import java.util.List;
 @Service
 public class UserService {
     @Autowired
-    private  RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     private UserRepository repository;
 
     @Autowired
-    private  AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     private JwtService jwtTokenService;
 
     @Autowired
-    private  SecurityConfiguration securityConfiguration;
+    private SecurityConfiguration securityConfiguration;
 
 
     public void create(CreateUserDTO createUserDto) {

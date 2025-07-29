@@ -26,10 +26,10 @@ public class ProjectMemberController {
     }
 
     @GetMapping(value = "/{projectId}")
-    public ResponseEntity<List<ProjectMembers>> findAllByProject(@PathVariable Long projectId){
+    public ResponseEntity<List<ProjectMembers>> findAllByProject(@PathVariable Long projectId) {
         List<ProjectMembers> members = service.findAllByProjectId(projectId);
 
-        return  new ResponseEntity<>(members,HttpStatus.OK);
+        return new ResponseEntity<>(members, HttpStatus.OK);
 
     }
 
@@ -41,7 +41,7 @@ public class ProjectMemberController {
     }
 
     @DeleteMapping(value = "/{memberId}")
-    public ResponseEntity<Void> delete(@PathVariable Long memberId){
+    public ResponseEntity<Void> delete(@PathVariable Long memberId) {
 
         service.removeMember(memberId);
 

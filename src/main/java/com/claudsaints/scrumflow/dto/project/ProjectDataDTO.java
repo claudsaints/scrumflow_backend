@@ -18,7 +18,7 @@ import java.util.UUID;
 @Getter
 @Builder
 public class ProjectDataDTO {
-    private UUID id;
+    private UUID uuid;
     private String title;
     private String description;
     private Instant create_at;
@@ -33,7 +33,7 @@ public class ProjectDataDTO {
     private Set<Long> sprints_ids = new HashSet<>();
 
     public ProjectDataDTO(Project obj) {
-        this.id = obj.getUuid();
+        this.uuid = obj.getUuid();
         this.title = obj.getTitle();
         this.description = obj.getDescription();
         this.create_at = obj.getCreate_At();
@@ -41,9 +41,9 @@ public class ProjectDataDTO {
 
         obj.getMembers().forEach(m -> members.add(new ProjectMemberDTO(m)));
 
-        obj.getSections().forEach(s -> this.sections.add( new SectionSimpleData(s.getUuid(), s.getTitle(), s.getDescription())));
+        obj.getSections().forEach(s -> this.sections.add(new SectionSimpleData(s.getUuid(), s.getTitle(), s.getDescription())));
 
-        obj.getSprints().forEach( s -> this.sprints_ids.add(s.getId()));
+        obj.getSprints().forEach(s -> this.sprints_ids.add(s.getId()));
 
     }
 }

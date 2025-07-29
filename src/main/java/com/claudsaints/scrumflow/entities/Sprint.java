@@ -31,7 +31,7 @@ public class Sprint implements Serializable {
     private Project project;
 
     @OneToOne
-    private  Section section;
+    private Section section;
 
     private String title;
 

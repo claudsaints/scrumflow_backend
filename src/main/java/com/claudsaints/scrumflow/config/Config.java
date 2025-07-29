@@ -107,7 +107,7 @@ public class Config implements CommandLineRunner {
         Sprint sp2 = new Sprint(null, p1, s2, "one", null, null, "create frontend");
 
 
-        sprintRepository.saveAll(Arrays.asList( sp1, sp2));
+        sprintRepository.saveAll(Arrays.asList(sp1, sp2));
 
 
     }

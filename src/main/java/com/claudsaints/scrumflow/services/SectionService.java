@@ -4,6 +4,7 @@ import com.claudsaints.scrumflow.controllers.exceptions.ObjectNotFound;
 import com.claudsaints.scrumflow.dto.section.CreateSectionDTO;
 import com.claudsaints.scrumflow.entities.Section;
 import com.claudsaints.scrumflow.repositories.SectionRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,18 +32,17 @@ public class SectionService {
         return repository.save(newSection);
     }
 
-    public Section findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new ObjectNotFound("Section Not Found"));
-    }
 
     public Section findByUuid(UUID id) {
         return repository.findByUuid(id).orElseThrow(() -> new ObjectNotFound("Section Not Found"));
     }
 
+    @Transactional
     public List<Section> findAll(UUID projectId) {
         return repository.findAllByProjectUuid(projectId);
     }
 
+    @Transactional
     public void delete(UUID id) {
         repository.deleteByUuid(id);
     }

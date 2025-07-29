@@ -1,15 +1,11 @@
 package com.claudsaints.scrumflow.services;
 
-import com.claudsaints.scrumflow.controllers.exceptions.ObjectNotFound;
 import com.claudsaints.scrumflow.dto.projectList.CreateProjectListDTO;
-import com.claudsaints.scrumflow.dto.projectList.ProjectListDTO;
-import com.claudsaints.scrumflow.entities.Project;
 import com.claudsaints.scrumflow.entities.ProjectList;
 import com.claudsaints.scrumflow.entities.Section;
 import com.claudsaints.scrumflow.repositories.ListRepository;
-import com.claudsaints.scrumflow.repositories.SectionRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,27 +15,25 @@ import java.util.*;
 @Service
 public class ProjectListService {
 
-    private final ListRepository repository;
+    @Autowired
+    private ListRepository repository;
 
     @Autowired
     private SectionService sectionService;
-
-    public ProjectListService(ListRepository repository) {
-        this.repository = repository;
-    }
 
 
     public ProjectList createList(UUID sectionId, CreateProjectListDTO list) {
 
         Section section = sectionService.findByUuid(sectionId);
 
-        int newPosition = repository.findTopBySectionUuidOrderByPositionDesc(sectionId).map( l -> l.getPosition() + 1 ).orElse(0);
+        int newPosition = repository.findTopBySectionUuidOrderByPositionDesc(sectionId).map(l -> l.getPosition() + 1).orElse(0);
 
         ProjectList list1 = new ProjectList(null, section, list.getTitle(), newPosition, Instant.now());
 
         return repository.save(list1);
     }
 
+    @Transactional
     public ProjectList updatePosition(UUID listId, UUID sectionId, int newPos) {
         ProjectList targetList = this.findByUuid(listId);
 
@@ -48,7 +42,7 @@ public class ProjectListService {
         Optional<ProjectList> listAlreadyExist = section.getLists().stream()
                 .filter(e -> e.getPosition() == newPos).findFirst();
 
-        if (!listAlreadyExist.isEmpty()) {
+        if (listAlreadyExist.isPresent()) {
             listAlreadyExist.get().setPosition(targetList.getPosition());
             targetList.setPosition(newPos);
             repository.saveAll(Arrays.asList(listAlreadyExist.get(), targetList));
@@ -60,7 +54,8 @@ public class ProjectListService {
 
     }
 
-    public ProjectList updateTitle(UUID listId, String title){
+    @Transactional
+    public ProjectList updateTitle(UUID listId, String title) {
         ProjectList projectList = findByUuid(listId);
 
         projectList.setTitle(title);
@@ -68,18 +63,14 @@ public class ProjectListService {
         return repository.save(projectList);
     }
 
-
-    public ProjectList findById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ObjectNotFound("List not found"));
-    }
-
-    public ProjectList findByUuid(UUID id){
+    public ProjectList findByUuid(UUID id) {
         return repository.findByUuid(id)
                 .orElseThrow(() -> new EntityNotFoundException("List not found"));
 
     }
-    public void deleteById(UUID listId){
+
+    @Transactional
+    public void deleteById(UUID listId) {
         repository.deleteByUuid(listId);
     }
 

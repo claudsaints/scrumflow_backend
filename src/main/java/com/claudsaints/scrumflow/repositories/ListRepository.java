@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ListRepository extends JpaRepository<ProjectList, Long> , UuidRepository<ProjectList>{
+public interface ListRepository extends JpaRepository<ProjectList, Long>, UuidRepository<ProjectList> {
 
     Optional<ProjectList> findTopBySectionIdOrderByPositionDesc(Long sectionId);
 

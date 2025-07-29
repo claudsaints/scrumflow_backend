@@ -16,7 +16,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Section implements Comparable<Section>{
+public class Section implements Comparable<Section> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include()
@@ -30,7 +30,7 @@ public class Section implements Comparable<Section>{
 
     private String description;
 
-    @OneToMany(mappedBy = "section",  cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectList> lists = new TreeSet<>();
 
     @ManyToOne

@@ -20,7 +20,6 @@ public class ProjectListController {
     @Autowired
     private ProjectListService service;
 
-    //todo
     @PostMapping("/{sectionId}")
     public ResponseEntity<ProjectList> create(@RequestBody CreateProjectListDTO listDTO, @PathVariable UUID sectionId) {
         ProjectList list = service.createList(sectionId, listDTO);
@@ -31,21 +30,21 @@ public class ProjectListController {
     @PutMapping
     public ResponseEntity<ProjectList> updatePosition(@RequestParam UUID sectionId, UUID listId, int newPos) {
 
-        ProjectList list = service.updatePosition( listId,sectionId, newPos);
+        ProjectList list = service.updatePosition(listId, sectionId, newPos);
 
         return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping( value = "/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<ProjectList> updateTitle(@PathVariable UUID listId, @RequestBody String title) {
 
-        ProjectList list = service.updateTitle( listId, title);
+        ProjectList list = service.updateTitle(listId, title);
 
         return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping( value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id ){
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.OK);

@@ -15,14 +15,14 @@ import java.util.UUID;
 @Getter
 @Setter
 public class ProjectListDTO {
-    private UUID id;
+    private UUID uuid;
     private String title;
     private Integer position;
     private Instant create_at;
     private Set<CardDTO> cardList = new HashSet<CardDTO>();
 
     public ProjectListDTO(ProjectList obj) {
-        this.id = obj.getUuid();
+        this.uuid = obj.getUuid();
         this.title = obj.getTitle();
         this.position = obj.getPosition();
         this.create_at = obj.getCreate_at();

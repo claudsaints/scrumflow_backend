@@ -44,10 +44,10 @@ public class Project implements Serializable {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Section> sections = new HashSet<>();
 
-    @OneToMany(mappedBy = "project",  cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Label> labels = new HashSet<>();
 
-    @OneToMany(mappedBy = "project",  cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Sprint> sprints = new HashSet<>();
 
 
