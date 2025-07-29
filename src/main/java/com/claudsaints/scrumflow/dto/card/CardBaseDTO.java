@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.util.Set;
 import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @Setter

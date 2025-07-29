@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class ProjectCardService {
@@ -25,16 +26,16 @@ public class ProjectCardService {
         this.projectListService = projectListService;
     }
 
-    public Card createCard(Long listId, CreateCardDTO cardDTO) {
-        var list = projectListService.findById(listId);
+    public Card createCard(UUID listId, CreateCardDTO cardDTO) {
+        var list = projectListService.findByUuid(listId);
 
         Card card = new Card(null, list, cardDTO.title(), "", null,
                 null, null, null);
         return repository.save(card);
     }
 
-    public Card updateCard(Long cardId, CardBaseDTO dto) {
-        Card card = this.findById(cardId);
+    public Card updateCard(UUID cardId, CardBaseDTO dto) {
+        Card card = this.findByUuid(cardId);
 
         if (dto.getTitle() != null) card.setTitle(dto.getTitle());
         if (dto.getDescription() != null) card.setDescription(dto.getDescription());
@@ -61,7 +62,11 @@ public class ProjectCardService {
         return repository.findById(id).orElseThrow(() -> new ObjectNotFound("Card not found"));
     }
 
-    public void  delete(Long cardId){
-        repository.deleteById(cardId);
+    public Card findByUuid(UUID uuid){
+        return repository.findByUuid(uuid).orElseThrow(() -> new ObjectNotFound("Card not found"));
+    }
+
+    public void  delete(UUID cardId){
+        repository.deleteByUuid(cardId);
     }
 }

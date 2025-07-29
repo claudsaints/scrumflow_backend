@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/project/cards")
@@ -24,7 +26,7 @@ public class ProjectCardController {
     @PostMapping("/{listId}")
     public ResponseEntity<Card> create(
             @RequestBody CreateCardDTO cardDTO,
-            @PathVariable Long listId
+            @PathVariable UUID listId
     ) {
         Card newCard = service.createCard(listId, cardDTO);
 
@@ -33,9 +35,9 @@ public class ProjectCardController {
 
     @GetMapping("/{cardId}")
     public ResponseEntity<Card> findById(
-            @PathVariable Long cardId
+            @PathVariable UUID cardId
     ) {
-        Card card = service.findById(cardId);
+        Card card = service.findByUuid(cardId);
 
         return new ResponseEntity<>(card, HttpStatus.OK);
     }
@@ -44,7 +46,7 @@ public class ProjectCardController {
     @PutMapping("/{cardId}")
     public ResponseEntity<Card> update(
             @RequestBody CardBaseDTO card,
-            @PathVariable Long cardId
+            @PathVariable UUID cardId
     ) {
         Card newCard = service.updateCard(cardId, card);
 
@@ -53,7 +55,7 @@ public class ProjectCardController {
 
     @DeleteMapping(value = "/{cardId}")
     public ResponseEntity<Void> delete(
-            @PathVariable Long cardId
+            @PathVariable UUID cardId
     ) {
         service.delete(cardId);
 
